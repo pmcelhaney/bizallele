@@ -128,8 +128,9 @@ export function renderSitePage(
             >
             <p
                 >Already have a data schema? Bizallele can read existing
-                <a href="#reference/docs/prisma">Prisma schemas</a> and
-                <a href="#reference/docs/openapi">OpenAPI specifications</a>
+                <a href="#reference/docs/prisma">Prisma schemas</a>,
+                <a href="#reference/docs/openapi">OpenAPI specifications</a>, and
+                <a href="#reference/docs/zod">Zod schemas</a>
                 to create field definitions, which you can extend with your
                 application’s rules.</p
             >

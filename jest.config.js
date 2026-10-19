@@ -4,7 +4,7 @@ module.exports = {
         './tests/jest-helpers/raw-sources.js',
     ],
     transformIgnorePatterns: [
-        '/node_modules/(?!(@lit/reactive-element|@open-wc/testing-helpers|lit|lit-element|lit-html)/)',
+        '/node_modules/(?!(@lit/reactive-element|@open-wc/testing-helpers|lit|lit-element|lit-html|yaml)/)',
     ],
     moduleNameMapper: {
         '^@pmcelhaney/bizallele$': '<rootDir>/src/index.js',

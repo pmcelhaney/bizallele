@@ -11,7 +11,7 @@ export const modifierSignatures: { [name: string]: string } = {
     defaultValue: 'defaultValue(value: DefaultSetting<T>)',
     disabled: 'disabled(predicate?: RecordSetting<boolean>)',
     emptyWhen: 'emptyWhen(predicate: ValueSetting<T, boolean>)',
-    filter: 'filter(predicate?: ((searchText: string, value: T) => boolean) | undefined)',
+    filter: 'filter(predicate?: (searchText: string, value: T) => boolean)',
     hashFunction: 'hashFunction<V = unknown>(fn: (values: V) => string)',
     inputMask: 'inputMask(regex: RegExp)',
     label: 'label(label: RecordSetting<string>)',
@@ -21,7 +21,7 @@ export const modifierSignatures: { [name: string]: string } = {
     minLength: 'minLength(length: RecordSetting<number>)',
     multipleValues: 'multipleValues(min?: number, max?: number)',
     options:
-        'options<O = T, F = Record<any>>(optionsConfig: OptionsApi<O, F> | ((record: Record<any>) => O[] | Promise<O[]>) | O[] | Promise<O[]>)',
+        'options<O = T, F = Record<any>>(optionsConfig: OptionsApi<O, F> | ((record: Record<any>) => O[] | Promise<O[]>) | Promise<O[]> | Array<O>)',
     parser: 'parser(fn: (value: any, record: Record<any>, context: string) => T)',
     placeholder: 'placeholder(placeholder: RecordSetting<string>)',
     record: 'record(fields: FieldDefinitions)',
@@ -37,7 +37,7 @@ export const modifierSignatures: { [name: string]: string } = {
     template:
         'template(fn: (field: T, record: Record<any>, context: string) => string | number | boolean | TemplateResult | Array<TemplateResult>)',
     textAlign:
-        "textAlign(direction: FieldSetting<T, 'left' | 'center' | 'right'>)",
+        'textAlign(direction: FieldSetting<T, "left" | "center" | "right">)',
     type: 'type(type: RecordSetting<inputType>)',
     validator: 'validator(validator: Validator<T>)',
 };
