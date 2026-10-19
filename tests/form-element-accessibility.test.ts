@@ -423,5 +423,4 @@ describe('automatic validation display', () => {
         await element.updateComplete;
         expect(errorOf(element)).not.toBeNull();
     });
-
 });

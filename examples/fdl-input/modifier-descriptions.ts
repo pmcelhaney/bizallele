@@ -33,14 +33,16 @@ export const modifierDescriptions: Readonly<Record<string, string>> = {
     placeholder:
         'Supplies a fixed or record-dependent hint for an empty control.',
     record: 'Defines a structured value whose child fields are ordinary Bizallele fields.',
-    recordset: 'Defines a repeated structured value whose rows use ordinary Bizallele fields.',
+    recordset:
+        'Defines a repeated structured value whose rows use ordinary Bizallele fields.',
     readOnly:
         'Determines whether a field is read-only, optionally based on the record.',
     reducer: 'Combines field values across records into an aggregate result.',
     rowClass: 'Adds fixed or record-dependent styling classes to table rows.',
     rowCount: 'Requests a number of visible rows in a supporting text control.',
     search: 'Configures search-based selection for adapters that support it.',
-    semanticType: 'Declares the domain meaning of a field independently of its renderer.',
+    semanticType:
+        'Declares the domain meaning of a field independently of its renderer.',
     sortable: 'Determines whether a table column can be sorted.',
     targetColumnWidth: 'Sets the preferred width of a table column.',
     template:

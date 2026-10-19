@@ -140,7 +140,7 @@ settings automatically.
 | Property or method                                                                                        | Purpose                                                                                                                               |
 | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`, `semanticType`                                                                                    | Resolved input type and domain meaning metadata.                                                                                      |
-| `recordDefinition`, `recordsetDefinition`                                                               | Child field definitions for structured values and repeated structured values.                                                        |
+| `recordDefinition`, `recordsetDefinition`                                                                 | Child field definitions for structured values and repeated structured values.                                                         |
 | `accept`, `autocomplete`, `autofocus`, `list`, `max`, `pattern`, `step`                                   | Renderer input metadata. Deprecated browser-specific settings remain available for compatibility.                                     |
 | `hasOptions`, `hasMultipleValues`, `minValueCount()`, `maxValueCount()`                                   | Selection metadata. Use `options()` to load choices.                                                                                  |
 | `hasFilter`, `search`, `searchConfig`, `hasSearch`, `match(searchText, value)`                            | Search and filter behavior.                                                                                                           |
@@ -223,22 +223,18 @@ with named child fields, and `recordset()` when it contains repeated
 record-shaped values:
 
 ```js
-const shippingAddress = field
-    .semanticType('address')
-    .record({
-        street: string,
-        city: string,
-        state: string,
-        zip: string,
-    });
+const shippingAddress = field.semanticType('address').record({
+    street: string,
+    city: string,
+    state: string,
+    zip: string,
+});
 
-const lineItems = field
-    .semanticType('line-items')
-    .recordset({
-        sku: string,
-        quantity: number,
-        unitPrice: number,
-    });
+const lineItems = field.semanticType('line-items').recordset({
+    sku: string,
+    quantity: number,
+    unitPrice: number,
+});
 ```
 
 The application-facing values are ordinary objects and arrays of objects. A

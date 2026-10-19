@@ -29,7 +29,8 @@ async function loadStoresForZip(zip: string) {
 
 const pickupStoreOptions = {
     fields: ['pickupZip'],
-    fetch: (record: Record<any>) => loadStoresForZip(record.getField('pickupZip')),
+    fetch: (record: Record<any>) =>
+        loadStoresForZip(record.getField('pickupZip')),
 };
 const postalZipValidator = {
     name: 'must contain five digits',

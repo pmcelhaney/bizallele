@@ -105,8 +105,8 @@ export class FdlPrediction extends LitElement {
         );
         return html`<p
                 >Use the current rules above. Choose a case and predict each
-                result, then ask the Bizallele model to check it. This is optional
-                practice; the comparison remains available.</p
+                result, then ask the Bizallele model to check it. This is
+                optional practice; the comparison remains available.</p
             >
             <div class="choices"
                 ><fdl-record .record=${this.guesses}

@@ -15,11 +15,11 @@ Business rules, UI semantics, and visual presentation should be independently
 variable. Each layer has one kind of authority and communicates with the next
 through an explicit contract.
 
-| Layer                  | Owns                                                                            | Does not own                                                          |
-| ---------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Layer                        | Owns                                                                            | Does not own                                                          |
+| ---------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | Business model and Bizallele | Validation, dependencies, parsing, formatting, comparison, and field state      | DOM structure, component selection, layout, color, and typography     |
-| Component semantics    | Elements, roles, labels, accessible state, focus, keyboard behavior, and events | Business policy, themes, spacing, color, and typography               |
-| Visual presentation    | Layout, color, typography, density, decoration, and animation                   | Meaning, validation rules, accessible state, and interaction behavior |
+| Component semantics          | Elements, roles, labels, accessible state, focus, keyboard behavior, and events | Business policy, themes, spacing, color, and typography               |
+| Visual presentation          | Layout, color, typography, density, decoration, and animation                   | Meaning, validation rules, accessible state, and interaction behavior |
 
 The dependency direction is:
 

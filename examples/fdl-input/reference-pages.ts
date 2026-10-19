@@ -20,7 +20,7 @@ export function renderReference(page: string) {
                 [
                     'API and integration',
                     function (file: string) {
-                        return /^docs\/(field-type|record|recordset|form-element|adapter-contract|scheduling-example|prisma|openapi)\.md$/.test(
+                        return /^docs\/(field-type|record|recordset|form-element|adapter-contract|scheduling-example|prisma|openapi|zod)\.md$/.test(
                             file
                         );
                     },
@@ -31,7 +31,7 @@ export function renderReference(page: string) {
                         return (
                             file.startsWith('docs/') &&
                             !file.startsWith('docs/adr/') &&
-                            !/^docs\/(field-type|record|recordset|form-element|adapter-contract|scheduling-example|prisma|openapi)\.md$/.test(
+                            !/^docs\/(field-type|record|recordset|form-element|adapter-contract|scheduling-example|prisma|openapi|zod)\.md$/.test(
                                 file
                             )
                         );

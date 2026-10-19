@@ -70,6 +70,38 @@ export default defineConfig({
         },
         {
             name: 'fdl-documentation',
+            configureServer(server) {
+                const root = resolve(directory, '../..');
+                // Existing pages are watched by load(); new pages need their
+                // directories watched so the virtual inventory can grow too.
+                server.watcher.add([
+                    resolve(root, 'docs'),
+                    resolve(root, '*.md'),
+                ]);
+                function refreshDocumentation(file) {
+                    const path = file.replaceAll('\\', '/');
+                    if (
+                        !path.endsWith('.md') ||
+                        !(
+                            path.startsWith(`${root}/docs/`) ||
+                            path.slice(0, path.lastIndexOf('/')) === root
+                        )
+                    )
+                        return;
+                    const module = server.moduleGraph.getModuleById(
+                        '\0virtual:fdl-documentation'
+                    );
+                    if (!module) return;
+                    server.moduleGraph.invalidateModule(module);
+                    server.ws.send({ type: 'full-reload' });
+                }
+                server.watcher.on('add', refreshDocumentation);
+                server.watcher.on('unlink', refreshDocumentation);
+                server.httpServer?.once('close', function cleanup() {
+                    server.watcher.off('add', refreshDocumentation);
+                    server.watcher.off('unlink', refreshDocumentation);
+                });
+            },
             resolveId(id) {
                 if (id === 'virtual:fdl-documentation') return '\0' + id;
             },

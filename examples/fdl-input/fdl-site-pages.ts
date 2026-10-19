@@ -33,7 +33,9 @@ export const sitePages = [
     { id: 'composition', title: 'Combine the rules' },
     { id: 'categories', title: 'Modifier categories' },
     { id: 'contributing', title: 'Contributing' },
-    ...documentationPages.map(function (page) { return { id: page.id, title: page.title }; }),
+    ...documentationPages.map(function (page) {
+        return { id: page.id, title: page.title };
+    }),
 ] as const;
 export type SitePage = (typeof sitePages)[number]['id'];
 
@@ -77,7 +79,8 @@ export function renderSitePage(
     compositionView?: HTMLElement,
     recipes: readonly ExplorerRecipe[] = []
 ) {
-    if (page === 'reference' || page.startsWith('reference/')) return renderReference(page);
+    if (page === 'reference' || page.startsWith('reference/'))
+        return renderReference(page);
     if (page === 'change-a-rule') return renderChangeRule();
     if (page === 'editable-recordset') return renderEditableRecordset();
     if (page === 'integration') return renderIntegration();
@@ -116,29 +119,32 @@ export function renderSitePage(
                 forms, tables, and
                 <a href="#reference/docs/backend-validation"
                     >server-side validation</a
-                >. Bizallele is a JavaScript and TypeScript library for validation,
-                formatting, dependencies, and conditional field state. Keep those
-                rules in a shared model so every interface uses the same behavior.</p
+                >. Bizallele is a JavaScript and TypeScript library for
+                validation, formatting, dependencies, and conditional field
+                state. Keep those rules in a shared model so every interface
+                uses the same behavior.</p
             >
             <p
-                >Compose small field definitions into records and tables. Specialize
-                them for different contexts without changing the originals. The
-                definitions carry the rules; your components choose how to express
-                them.</p
+                >Compose small field definitions into records and tables.
+                Specialize them for different contexts without changing the
+                originals. The definitions carry the rules; your components
+                choose how to express them.</p
             >
             <p
                 >Already have a data schema? Bizallele can read existing
-                <a href="#reference/docs/prisma">Prisma schemas</a> and
-                <a href="#reference/docs/openapi">OpenAPI specifications</a>
+                <a href="#reference/docs/prisma">Prisma schemas</a>,
+                <a href="#reference/docs/openapi">OpenAPI specifications</a>,
+                and
+                <a href="#reference/docs/zod">Zod schemas</a>
                 to create field definitions, which you can extend with your
                 application’s rules.</p
             >
             <p
-                >Bizallele works with any framework. Plug it into your existing design
-                system or start with the built-in example components.
+                >Bizallele works with any framework. Plug it into your existing
+                design system or start with the built-in example components.
                 Accessibility is baked into those components, with labelled
-                controls, keyboard interaction, and validation messages connected
-                to the fields they describe.</p
+                controls, keyboard interaction, and validation messages
+                connected to the fields they describe.</p
             >
             <fdl-delivery-experiment></fdl-delivery-experiment>
             <p
@@ -152,8 +158,8 @@ export function renderSitePage(
             <p
                 >Without a shared model, that same rule can end up in a form’s
                 input handlers, a separate validation function, and a table’s
-                editing logic. Bizallele keeps the rule in the field definition. A
-                form, a table, and a validation check can all use it, so
+                editing logic. Bizallele keeps the rule in the field definition.
+                A form, a table, and a validation check can all use it, so
                 changing the rule does not mean finding and updating several
                 copies. You can also test it without rendering a screen.</p
             >
@@ -165,8 +171,8 @@ export function renderSitePage(
                 validation feedback visible to the person using the form.</p
             >
             <p
-                >Your UI components read Bizallele’s field behavior and record state
-                to render controls and display validation messages. The
+                >Your UI components read Bizallele’s field behavior and record
+                state to render controls and display validation messages. The
                 application chooses the layout and workflow, and CSS controls
                 the appearance. You can reuse the same model across different
                 interfaces.</p
@@ -187,10 +193,12 @@ export function renderSitePage(
                         every record. For example, a name may be required and
                         displayed as text.</p
                     >
-                    <fdl-code-snippet><pre><code>${highlightJavaScript(`const fields = {
+                    <fdl-code-snippet>
+                        <pre><code>${highlightJavaScript(`const fields = {
     name: field.label('Name').required(),
     city: field.label('City'),
-};`)}</code></pre></fdl-code-snippet>
+};`)}</code></pre>
+                    </fdl-code-snippet>
                 </section>
                 <section class="model-concept" aria-labelledby="model-record">
                     <h3 id="model-record">Record</h3>
@@ -205,10 +213,12 @@ export function renderSitePage(
                         >One record binds <strong>Name</strong> to “Ada” and
                         <strong>City</strong> to “London”.</p
                     >
-                    <fdl-code-snippet><pre><code>${highlightJavaScript(`const person = new Record(fields, {
+                    <fdl-code-snippet>
+                        <pre><code>${highlightJavaScript(`const person = new Record(fields, {
     name: 'Ada',
     city: 'London',
-});`)}</code></pre></fdl-code-snippet>
+});`)}</code></pre>
+                    </fdl-code-snippet>
                 </section>
                 <section
                     class="model-concept"
@@ -228,10 +238,12 @@ export function renderSitePage(
                         <strong>Name</strong> and
                         <strong>City</strong> fields.</p
                     >
-                    <fdl-code-snippet><pre><code>${highlightJavaScript(`const people = new Recordset(fields, [
+                    <fdl-code-snippet>
+                        <pre><code>${highlightJavaScript(`const people = new Recordset(fields, [
     { name: 'Ada', city: 'London' },
     { name: 'Grace', city: 'New York' },
-]);`)}</code></pre></fdl-code-snippet>
+]);`)}</code></pre>
+                    </fdl-code-snippet>
                 </section>
             </div>
             <h2>From model to interface</h2>
@@ -248,8 +260,9 @@ export function renderSitePage(
                 responsibilities.</p
             >
             <div class="home-cta">
-                <a class="primary" href="#quickstart">Build your first form
-                    <span aria-hidden="true">→</span></a>
+                <a class="primary" href="#quickstart"
+                    >Build your first form <span aria-hidden="true">→</span></a
+                >
             </div>
         </article>`;
     if (page === 'how-it-works')
@@ -279,9 +292,11 @@ export function renderSitePage(
                 input into model values. Formatting produces display values.
                 Validation checks the model against the declared rules.</p
             >
-            <fdl-code-snippet><pre
-                class="code markup"
-            ><code>${highlightJavaScript(definition)}</code></pre></fdl-code-snippet>
+            <fdl-code-snippet>
+                <pre
+                    class="code markup"
+                ><code>${highlightJavaScript(definition)}</code></pre>
+            </fdl-code-snippet>
             <p
                 >The record enforces requiredness without rendering a UI. A
                 component reads the same rule to expose required state and its
@@ -299,13 +314,15 @@ export function renderSitePage(
                 and accessible field state. A view binds the record object using
                 Lit’s property syntax:</p
             >
-            <fdl-code-snippet><pre
-                class="code markup"
-            ><code>${highlightMarkup('<fdl-field .record=${person} field="name"></fdl-field>')}</code></pre></fdl-code-snippet>
+            <fdl-code-snippet>
+                <pre
+                    class="code markup"
+                ><code>${highlightMarkup('<fdl-field .record=${person} field="name"></fdl-field>')}</code></pre>
+            </fdl-code-snippet>
             <p
-                >The component is the integration layer. Bizallele does not choose
-                your page layout or visual theme. Other adapters can interpret
-                the model for different interfaces.
+                >The component is the integration layer. Bizallele does not
+                choose your page layout or visual theme. Other adapters can
+                interpret the model for different interfaces.
                 <a href="#integration">Integrate an existing component system</a
                 >: read the adapter obligations, public types, composition
                 rules, and current limits.</p
@@ -356,15 +373,11 @@ export function renderSitePage(
         <h2>Get the repository</h2>
         <p
             >Start with the
-            <a href="https://github.com/pmcelhaney/FDL">Bizallele repository</a> and
-            its
-            <a href="#reference/AGENTS"
-                >contributor guide</a
-            >. Read the
-            <a
-                href="#reference/docs/design-principles"
-                >design principles</a
+            <a href="https://github.com/pmcelhaney/bizallele"
+                >Bizallele repository</a
             >
+            and its <a href="#reference/AGENTS">contributor guide</a>. Read the
+            <a href="#reference/docs/design-principles">design principles</a>
             before changing modifiers, components, or presentation.</p
         >
         <h2>Work in the root checkout</h2>
@@ -376,16 +389,20 @@ export function renderSitePage(
             until a push is requested.</p
         >
         <h2>Install and run locally</h2>
-        <fdl-code-snippet><pre class="code markup"><code>npm install
-npm run docs:dev</code></pre></fdl-code-snippet>
+        <fdl-code-snippet>
+            <pre class="code markup"><code>npm install
+npm run docs:dev</code></pre>
+        </fdl-code-snippet>
         <p
             >Open the root URL printed by the local server to view this site.
             Changes to the example source update the preview.</p
         >
         <h2>Verify your changes</h2>
-        <fdl-code-snippet><pre class="code markup"><code>npm test
+        <fdl-code-snippet>
+            <pre class="code markup"><code>npm test
 npm run typecheck
-npm run docs:build</code></pre></fdl-code-snippet>
+npm run docs:build</code></pre>
+        </fdl-code-snippet>
         <p
             >Follow
             <a href="#change-a-rule"

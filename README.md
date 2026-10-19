@@ -2,9 +2,9 @@
 
 ![Bizallele logo](examples/fdl-input/public/bizallele-logo.jpg)
 
-[![Tests](https://github.com/pmcelhaney/FDL/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/FDL/actions/workflows/tests.yml)
-[![Type check](https://github.com/pmcelhaney/FDL/actions/workflows/typecheck.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/FDL/actions/workflows/typecheck.yml)
-[![Documentation build](https://github.com/pmcelhaney/FDL/actions/workflows/docs-build.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/FDL/actions/workflows/docs-build.yml)
+[![Tests](https://github.com/pmcelhaney/bizallele/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/bizallele/actions/workflows/tests.yml)
+[![Type check](https://github.com/pmcelhaney/bizallele/actions/workflows/typecheck.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/bizallele/actions/workflows/typecheck.yml)
+[![Documentation build](https://github.com/pmcelhaney/bizallele/actions/workflows/docs-build.yml/badge.svg?branch=main)](https://github.com/pmcelhaney/bizallele/actions/workflows/docs-build.yml)
 
 Define how your data behaves—then reuse the same rules across forms, tables,
 and server-side validation. Bizallele is a JavaScript and TypeScript library
@@ -97,14 +97,14 @@ npm install @pmcelhaney/bizallele lit
 npm install --save-dev vite@5.4.21 typescript@4.6.4
 ```
 
-Follow [Your first form](https://patrickmcelhaney.org/FDL/#quickstart) for the
+Follow [Your first form](https://patrickmcelhaney.org/bizallele/#quickstart) for the
 complete script, HTML entry point, adapter registration, and TypeScript setup.
 Run `npx vite` in your application and open the local URL it prints. No Bizallele
 checkout or local package build is needed.
 
 The guide uses a Lit adapter. React applications can keep their existing
 components and connect them to the same Bizallele model; see
-[Adapter and API contracts](https://patrickmcelhaney.org/FDL/#integration)
+[Adapter and API contracts](https://patrickmcelhaney.org/bizallele/#integration)
 for subscriptions, edit handling, and accessible state mapping. Your application
 owns submission, server validation, routing, and persistence.
 

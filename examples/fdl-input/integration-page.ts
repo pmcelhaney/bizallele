@@ -39,8 +39,8 @@ export function renderIntegration() {
         </ol>
         <p>
             The Lit elements used on this site are example implementations of
-            this contract. You can build components in any framework using Bizallele’s
-            model APIs. Your components do not need to extend
+            this contract. You can build components in any framework using
+            Bizallele’s model APIs. Your components do not need to extend
             <code>FormElement</code> or use the example custom-element names;
             they need to honor the same model behavior and accessible
             interaction responsibilities described below.

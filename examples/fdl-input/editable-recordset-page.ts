@@ -96,10 +96,9 @@ await shipments.requestImmediateUpdate();
 const allTotal = total(shipments.allRecords);
 const visibleTotal = total(shipments.currentPage);
 // A reducer modifier also accepts explicit values:
-const sumColumn = new Recordset(
-    { amount: field.reducer('sum') },
-    []
-).column('amount');
+const sumColumn = new Recordset({ amount: field.reducer('sum') }, []).column(
+    'amount'
+);
 const visibleUnits = sumColumn.aggregate(
     shipments.currentPage.map(row => row.getField('quantity'))
 );`)}</code></pre>

@@ -25,9 +25,11 @@ it('groups the address and propagates child edits and validation to the parent',
     document.body.append(demo);
     await demo.updateComplete;
     const inspection = await inspectorRoot(demo);
-    expect(Array.from(inspection.querySelectorAll('tbody tr')).map(row =>
-        row.querySelector('.field-label')!.textContent
-    )).toEqual(['Delivery method', 'Shipping address', 'Pickup ZIP code', 'Pickup store']);
+    expect(
+        Array.from(inspection.querySelectorAll('tbody tr')).map(
+            row => row.querySelector('.field-label')!.textContent
+        )
+    ).toEqual(['Delivery method', 'Shipping address', 'Pickup ZIP code', 'Pickup store']);
     const address = await addressRoot(demo);
     expect(address.querySelector('legend')!.textContent).toBe('Shipping address');
     const record = (demo.shadowRoot!.querySelector('fdl-field') as any).record;
@@ -38,7 +40,11 @@ it('groups the address and propagates child edits and validation to the parent',
     expect(record.getField('address').street).toBe('');
     expect(record.isValid('address')).toBe(false);
     expect(record.isValid()).toBe(false);
-    expect((await inspectorRoot(demo)).querySelector('[data-nested-field="street"] [aria-label="Invalid"]')).not.toBeNull();
+    expect(
+        (await inspectorRoot(demo)).querySelector(
+            '[data-nested-field="street"] [aria-label="Invalid"]'
+        )
+    ).not.toBeNull();
     await editField(demo.shadowRoot!, 'fulfillment', 'pickup');
     await editField(demo.shadowRoot!, 'store', 'uptown');
     expect(record.isValid()).toBe(true);
@@ -331,7 +337,10 @@ it('shows retained values and conditional state in the inspector', async () => {
 it('shows conditional requiredness in the inspector as the dependency changes', async () => {
     const page = await openExplorer('#required');
     const inspector = page.shadowRoot!.querySelector('fdl-record-inspector')!;
-    for (const [value, required] of [['yes', true], ['no', false]] as const) {
+    for (const [value, required] of [
+        ['yes', true],
+        ['no', false],
+    ] as const) {
         await editField(page.shadowRoot!, 'followUp', value);
         await page.updateComplete;
         await inspector.updateComplete;
@@ -374,9 +383,7 @@ it('changes length rules while preserving the value and matching the selected mi
     expect(code.record.getField('code')).toBe('ABC');
     const frame = demo.shadowRoot.querySelector('fdl-example') as any;
     await frame.updateComplete;
-    expect(frame.sources['text-length-model.js']).toContain(
-        '.minLength(minimum)'
-    );
+    expect(frame.sources['text-length-model.js']).toContain('.minLength(minimum)');
 });
 
 it('shows semantic state with the shared inspector icons', async () => {
@@ -485,12 +492,17 @@ it('shows parsed currency values in the inspector without an explanatory panel',
     await new Promise(resolve => setTimeout(resolve, 0));
     const input = field.shadowRoot.querySelector('input') as HTMLInputElement;
     const inspector = catalog.shadowRoot!.querySelector('fdl-record-inspector')!;
-    for (const [entered, stored] of [['$2345.670', '2345.67'], ['bad money', 'NaN']]) {
+    for (const [entered, stored] of [
+        ['$2345.670', '2345.67'],
+        ['bad money', 'NaN'],
+    ]) {
         input.value = entered;
         input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
         await catalog.updateComplete;
         await inspector.updateComplete;
-        expect(inspector.shadowRoot!.querySelector('[data-field="money"]')!.textContent).toContain(stored);
+        expect(inspector.shadowRoot!.querySelector('[data-field="money"]')!.textContent).toContain(
+            stored
+        );
     }
     expect(catalog.shadowRoot!.querySelector('.value-pipeline')).toBeNull();
 });

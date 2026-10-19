@@ -6,7 +6,10 @@ function data() {
     return new Recordset(
         {
             name: field.label('Name').required(),
-            amount: field.type('number').textAlign('right').formatter(value => `$${value}`),
+            amount: field
+                .type('number')
+                .textAlign('right')
+                .formatter(value => `$${value}`),
             enabled: field,
             missing: field,
         },
@@ -68,10 +71,10 @@ it('drills into a live record from a cell and returns with display settings and 
 });
 
 it('uses the displayed row number and supports nested navigation before returning to the set', async () => {
-    const recordset = new Recordset<any>(
-        { name: field, child: field.record({ city: field }) },
-        [{ name: 'First' }, { name: 'Second', child: { city: 'Paris' } }]
-    );
+    const recordset = new Recordset<any>({ name: field, child: field.record({ city: field }) }, [
+        { name: 'First' },
+        { name: 'Second', child: { city: 'Paris' } },
+    ]);
     recordset.pageSize = 1;
     recordset.pageNumber = 2;
     const inspector = await inspect(recordset);
@@ -194,14 +197,18 @@ it('collapses accessibly and reopens with current data', async () => {
     expect(button.getAttribute('aria-expanded')).toBe('false');
     expect(button.getAttribute('aria-label')).toBe('Inspect recordset');
     expect(inspector.shadowRoot!.getElementById('recordset-details')!.hidden).toBe(true);
-    expect(inspector.shadowRoot!.querySelector('.record-validity')!.hasAttribute('hidden')).toBe(true);
+    expect(inspector.shadowRoot!.querySelector('.record-validity')!.hasAttribute('hidden')).toBe(
+        true
+    );
     expect(button.hasAttribute('hidden')).toBe(false);
     recordset.allRecords[0].setField('name', 'Updated');
     button.click();
     await inspector.updateComplete;
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(button.querySelector('svg circle')).toBeTruthy();
-    expect(inspector.shadowRoot!.querySelector('.record-validity')!.hasAttribute('hidden')).toBe(false);
+    expect(inspector.shadowRoot!.querySelector('.record-validity')!.hasAttribute('hidden')).toBe(
+        false
+    );
     expect(inspector.shadowRoot!.querySelector('[data-field="name"]')!.textContent!.trim()).toBe(
         'Updated'
     );
@@ -347,9 +354,14 @@ it('numbers unique CSS classes across columns, rows and cells and keeps their sc
     const recordset = new Recordset<any>(
         {
             name: field.columnClass('shared heading').rowClass('row shared'),
-            amount: field.cellClass('shared cell').cellClass(value => value > 10 ? ['high', 'cell'] : []),
+            amount: field
+                .cellClass('shared cell')
+                .cellClass(value => (value > 10 ? ['high', 'cell'] : [])),
         },
-        [{ name: 'Ada', amount: 12 }, { name: 'Grace', amount: 3 }]
+        [
+            { name: 'Ada', amount: 12 },
+            { name: 'Grace', amount: 3 },
+        ]
     );
     const inspector = await inspect(recordset);
     const root = inspector.shadowRoot!;
@@ -359,12 +371,14 @@ it('numbers unique CSS classes across columns, rows and cells and keeps their sc
     expect(root.querySelector('.class-number')).toBeNull();
     toggle.click();
     await inspector.updateComplete;
-    expect([...root.querySelectorAll('.class-entry code')].map(entry => entry.textContent)).toEqual([
-        'shared', 'heading', 'row', 'cell', 'high',
-    ]);
+    expect([...root.querySelectorAll('.class-entry code')].map(entry => entry.textContent)).toEqual(
+        ['shared', 'heading', 'row', 'cell', 'high']
+    );
     expect(root.querySelector('.legend')).toBeNull();
     function numbers(selector: string) {
-        return [...root.querySelectorAll(`${selector} .class-number`)].map(marker => marker.textContent!.trim());
+        return [...root.querySelectorAll(`${selector} .class-number`)].map(marker =>
+            marker.textContent!.trim()
+        );
     }
     expect(numbers('thead th:nth-child(3)')).toEqual(['1', '2']);
     expect(numbers('thead th:nth-child(4)')).toEqual([]);
@@ -372,8 +386,14 @@ it('numbers unique CSS classes across columns, rows and cells and keeps their sc
     expect(numbers('tbody tr:first-child [data-field="amount"]')).toEqual(['1', '4', '5']);
     expect(numbers('tbody tr:last-child [data-field="amount"]')).toEqual(['1', '4']);
     expect(numbers('[data-field="name"]')).toEqual([]);
-    expect(root.querySelector('[data-field="amount"] [title="CSS class 5: high"]')!.getAttribute('aria-label')).toBe('CSS class 5: high');
-    expect(root.querySelector('[data-field="amount"] .stored-cell > span:nth-child(2)')!.textContent).toBe('12');
+    expect(
+        root
+            .querySelector('[data-field="amount"] [title="CSS class 5: high"]')!
+            .getAttribute('aria-label')
+    ).toBe('CSS class 5: high');
+    expect(
+        root.querySelector('[data-field="amount"] .stored-cell > span:nth-child(2)')!.textContent
+    ).toBe('12');
     toggle.click();
     await inspector.updateComplete;
     expect(root.querySelector('.class-legend')).toBeNull();
@@ -398,7 +418,9 @@ it('numbers unique CSS classes across columns, rows and cells and keeps their sc
     await replacement.requestImmediateUpdate();
     inspector.recordset = replacement;
     await inspector.updateComplete;
-    expect(root.querySelector('.class-number')!.getAttribute('title')).toBe('CSS class 1: replacement');
+    expect(root.querySelector('.class-number')!.getAttribute('title')).toBe(
+        'CSS class 1: replacement'
+    );
 });
 
 it('omits the CSS legend and markers when no classes apply', async () => {
@@ -422,7 +444,11 @@ it('defaults to visible rows and toggles all loaded rows without changing the vi
     await inspector.updateComplete;
     expect(root.querySelector('table')!.getAttribute('aria-label')).toBe('All loaded rows');
     expect(root.querySelectorAll('tbody tr')).toHaveLength(3);
-    expect([...root.querySelectorAll('tbody th')].map(cell => cell.textContent!.trim())).toEqual(['1', '2', '3']);
+    expect([...root.querySelectorAll('tbody th')].map(cell => cell.textContent!.trim())).toEqual([
+        '1',
+        '2',
+        '3',
+    ]);
     expect(recordset.currentPage).toHaveLength(1);
     expect(JSON.parse(root.querySelector('pre')!.textContent!).allRows).toHaveLength(3);
     recordset.allRecords[0].setField('name', 'Updated hidden row');
@@ -434,7 +460,9 @@ it('defaults to visible rows and toggles all loaded rows without changing the vi
     expect(root.querySelector('table')!.getAttribute('aria-label')).toBe('Visible rows');
     expect(JSON.parse(root.querySelector('pre')!.textContent!).allRows).toBeUndefined();
 
-    recordset.filter = function allRecords() { return true; };
+    recordset.filter = function allRecords() {
+        return true;
+    };
     recordset.pageSize = 1;
     recordset.pageNumber = 2;
     await recordset.requestImmediateUpdate();

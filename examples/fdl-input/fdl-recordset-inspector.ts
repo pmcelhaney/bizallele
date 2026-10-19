@@ -109,7 +109,9 @@ export class FdlRecordsetInspector extends LitElement {
         await this.updateComplete;
         const inspector = this.renderRoot.querySelector('fdl-record-inspector');
         await inspector?.updateComplete;
-        inspector?.shadowRoot?.querySelector<HTMLButtonElement>('.back-button')?.focus();
+        inspector?.shadowRoot
+            ?.querySelector<HTMLButtonElement>('.back-button')
+            ?.focus();
     }
 
     private async backToRecordset() {
@@ -122,9 +124,13 @@ export class FdlRecordsetInspector extends LitElement {
             ? this.recordset?.allRecords
             : this.recordset?.currentPage;
         const index = record ? (records?.indexOf(record) ?? -1) : -1;
-        const buttons = this.renderRoot.querySelectorAll<HTMLButtonElement>('.inspect-row');
+        const buttons =
+            this.renderRoot.querySelectorAll<HTMLButtonElement>('.inspect-row');
         if (index >= 0) buttons[index]?.focus();
-        else this.renderRoot.querySelector<HTMLButtonElement>('header button')?.focus();
+        else
+            this.renderRoot
+                .querySelector<HTMLButtonElement>('header button')
+                ?.focus();
     }
 
     private classMarkers(classes: readonly string[]) {
@@ -217,7 +223,8 @@ export class FdlRecordsetInspector extends LitElement {
                     <p>See each record’s stored values and current state.</p>
                 </div>
                 ${
-                    recordset && recordset.allRecords.some(record => !record.isValid())
+                    recordset &&
+                    recordset.allRecords.some(record => !record.isValid())
                         ? html`<span
                               class="record-validity"
                               role="img"
@@ -331,7 +338,8 @@ export class FdlRecordsetInspector extends LitElement {
                                                               class="inspect-row"
                                                               aria-label=${`Inspect record ${(this.showAllRows ? 1 : recordset.firstRecordNumberOnPage) + index}`}
                                                               title="Inspect record"
-                                                          >${(this.showAllRows ? 1 : recordset.firstRecordNumberOnPage) + index}</button></th
+                                                              >${(this.showAllRows ? 1 : recordset.firstRecordNumberOnPage) + index}</button
+                                                          ></th
                                                       >
                                                       ${fields.map(
                                                           (name, fieldIndex) =>

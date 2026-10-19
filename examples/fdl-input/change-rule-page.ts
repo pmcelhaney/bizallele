@@ -83,8 +83,8 @@ export function renderValidatorContract(includeExample = true) {
                           >Model file:
                           <code
                               >examples/fdl-input/conditional-validation-model.ts</code
-                          >. This consumer-facing version imports Bizallele by its
-                          package name.</p
+                          >. This consumer-facing version imports Bizallele by
+                          its package name.</p
                       >
                       <fdl-example
                           heading="Conditional validation"

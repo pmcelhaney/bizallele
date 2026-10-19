@@ -35,6 +35,7 @@ it('packs the declared runtime and type entry points, including documented adapt
         for (const module of [
             'prisma',
             'openapi',
+            'zod',
             'form-element',
             'example-recordset',
             'lit/index',
@@ -65,6 +66,7 @@ it('packs the declared runtime and type entry points, including documented adapt
             'yaml',
             'ajv',
             'ajv-formats',
+            'zod',
         ]) {
             symlinkSync(
                 resolve('node_modules', dependency),
@@ -78,6 +80,11 @@ it('packs the declared runtime and type entry points, including documented adapt
 import { field, Record, Recordset } from '@pmcelhaney/bizallele';
 import { fieldsFromPrisma } from '@pmcelhaney/bizallele/prisma';
 import { fieldsFromOpenAPI } from '@pmcelhaney/bizallele/openapi';
+import { fieldsFromZod } from '@pmcelhaney/bizallele/zod';
+import * as z from 'zod/v4';
+const zodFields = fieldsFromZod(z.object({ stock: z.number().int().nonnegative() }), { fields: ['stock'] });
+const zodRecord = new Record(zodFields, { stock: 12 });
+if (!zodRecord.isValid() || zodRecord.isValid('stock', -1)) throw new Error('Zod adapter validation failed');
 import { FdlField, FdlAddress, FdlTable, FdlColumn, FormElement } from '@pmcelhaney/bizallele/lit';
 import '@pmcelhaney/bizallele/lit/fdl-field';
 import '@pmcelhaney/bizallele/lit/fdl-address';
@@ -138,6 +145,9 @@ export { control, table, prismaRecord, openapiRecord, basket, FdlAddress, FdlCol
         ).toBe(false);
         expect(
             Object.keys(coreBundle.metafile.inputs).some(file => /(?:yaml|openapi)/.test(file))
+        ).toBe(false);
+        expect(
+            Object.keys(coreBundle.metafile.inputs).some(file => /(?:^|\/)zod\//.test(file))
         ).toBe(false);
         const bundle = esbuild.buildSync({
             entryPoints: [consumer],
