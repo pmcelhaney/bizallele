@@ -175,7 +175,10 @@ export class FdlModifierExplorer extends LitElement {
         const page = sitePages.find(page => page.id === hash);
         if (page || !hash) {
             this.showPage(page?.id ?? 'home', false, Boolean(event));
-            if (page?.id === 'categories' || page?.id.startsWith('reference/')) {
+            if (
+                page?.id === 'categories' ||
+                page?.id.startsWith('reference/')
+            ) {
                 const category = new URLSearchParams(
                     window.location.hash.split('?')[1]
                 ).get(page?.id === 'categories' ? 'category' : 'section');
@@ -271,7 +274,9 @@ export class FdlModifierExplorer extends LitElement {
         this.requestUpdate();
     }
     private demo(name: string) {
-        return html`<fdl-modifier-catalog modifier=${name}></fdl-modifier-catalog>`;
+        return html`<fdl-modifier-catalog
+            modifier=${name}
+        ></fdl-modifier-catalog>`;
     }
     private renderModifierSection(recipe: ExplorerRecipe) {
         const source = exampleSource(recipe.name);
@@ -298,7 +303,9 @@ export class FdlModifierExplorer extends LitElement {
                           aria-label="Adapter contract"
                       >
                           <h3>Adapter contract</h3><p>${recipe.limitation}</p>
-                          <fdl-code-snippet><pre><code>${highlightJavaScript(source.definition)}</code></pre></fdl-code-snippet>
+                          <fdl-code-snippet>
+                              <pre><code>${highlightJavaScript(source.definition)}</code></pre>
+                          </fdl-code-snippet>
                           <p
                               ><a href="#integration"
                                   >Read the adapter responsibilities</a
@@ -332,8 +339,7 @@ export class FdlModifierExplorer extends LitElement {
                                       >${recipe.limitation ? html`` : html`<button class="reset" @click=${() => this.reset(recipe.name)}>Reset example ↺</button>`}</div
                                   >
                                   <p class="instruction">${recipe.prompt}</p>
-                                  <div
-                                      class="demo-grid catalog-demo"
+                                  <div class="demo-grid catalog-demo"
                                       ><div
                                           class="controls"
                                           role="group"
@@ -485,7 +491,11 @@ export class FdlModifierExplorer extends LitElement {
                         event.preventDefault();
                         this.showPage('home');
                     }}
-                    ><img src="./bizallele-logo.jpg" alt="Bizallele" width="132" height="88" /></a
+                    ><img
+                        src="./bizallele-logo.jpg"
+                        alt="Bizallele"
+                        width="132"
+                        height="88" /></a
                 ><span class="mast-label"
                     >GENETIC CODE FOR BUSINESS RULES</span
                 ></header
@@ -510,18 +520,20 @@ export class FdlModifierExplorer extends LitElement {
                 >
                 <aside id="site-navigation">
                     <nav class="site-nav" aria-label="Site pages"
-                        >${sitePages.filter(entry => !entry.id.startsWith('reference/')).map(
-                            entry =>
-                                html`<a
-                                    href=${`#${entry.id}`}
-                                    aria-current=${this.page === entry.id || (entry.id === 'reference' && this.page.startsWith('reference/')) ? 'page' : 'false'}
-                                    @click=${(event: Event) => {
-                                        event.preventDefault();
-                                        this.showPage(entry.id);
-                                    }}
-                                    >${entry.title}</a
-                                >`
-                        )}</nav
+                        >${sitePages
+                            .filter(entry => !entry.id.startsWith('reference/'))
+                            .map(
+                                entry =>
+                                    html`<a
+                                        href=${`#${entry.id}`}
+                                        aria-current=${this.page === entry.id || (entry.id === 'reference' && this.page.startsWith('reference/')) ? 'page' : 'false'}
+                                        @click=${(event: Event) => {
+                                            event.preventDefault();
+                                            this.showPage(entry.id);
+                                        }}
+                                        >${entry.title}</a
+                                    >`
+                            )}</nav
                     >
                     <section
                         class="modifier-navigation"
@@ -805,10 +817,17 @@ export class FdlModifierExplorer extends LitElement {
             <footer class="site-footer">
                 <div>
                     <nav aria-label="Project links">
-                        <a href="https://github.com/pmcelhaney/bizallele">GitHub</a>
-                        <a href="https://patrickmcelhaney.org">Patrick McElhaney</a>
+                        <a href="https://github.com/pmcelhaney/bizallele"
+                            >GitHub</a
+                        >
+                        <a href="https://patrickmcelhaney.org"
+                            >Patrick McElhaney</a
+                        >
                     </nav>
-                    <p>Bizallele is a work in progress. Version 1.0 is expected in November 2026.</p>
+                    <p
+                        >Bizallele is a work in progress. Version 1.0 is
+                        expected in November 2026.</p
+                    >
                 </div>
                 <div class="footer-install">
                     <p>Install with npm (publication pending)</p>
@@ -824,8 +843,9 @@ export class FdlModifierExplorer extends LitElement {
                           @mouseenter=${() => clearTimeout(this.tooltipTimer)}
                           @mouseleave=${this.deferHideTooltip}
                       >
-                          <fdl-code-snippet><pre><code>${modifierSignatures[this.tooltip.recipe.name]}</code></pre
-                          ></fdl-code-snippet><p>${this.tooltip.recipe.title}</p></div
+                          <fdl-code-snippet>
+                              <pre><code>${modifierSignatures[this.tooltip.recipe.name]}</code></pre></fdl-code-snippet
+                          ><p>${this.tooltip.recipe.title}</p></div
                       >`
                     : ''
             }`;
@@ -1390,8 +1410,12 @@ export class FdlModifierExplorer extends LitElement {
             font-weight: 700;
             letter-spacing: 0.04em;
         }
-        .integration-header h1 { margin: 16px 0; }
-        .integration-header .description { margin-bottom: 0; }
+        .integration-header h1 {
+            margin: 16px 0;
+        }
+        .integration-header .description {
+            margin-bottom: 0;
+        }
         .integration-flow {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1414,10 +1438,20 @@ export class FdlModifierExplorer extends LitElement {
             left: -22px;
             color: #64748b;
         }
-        .integration-flow .category-icon { color: #2563eb; margin-top: 3px; }
-        .integration-flow strong, .integration-flow span,
-        .integration-reference strong, .integration-reference span span { display: block; }
-        .integration-flow span, .integration-reference span span { color: #475569; }
+        .integration-flow .category-icon {
+            color: #2563eb;
+            margin-top: 3px;
+        }
+        .integration-flow strong,
+        .integration-flow span,
+        .integration-reference strong,
+        .integration-reference span span {
+            display: block;
+        }
+        .integration-flow span,
+        .integration-reference span span {
+            color: #475569;
+        }
         .integration-references {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1433,14 +1467,38 @@ export class FdlModifierExplorer extends LitElement {
             text-decoration: none;
             background: white;
         }
-        .integration-reference > span:nth-child(2) { flex: 1; min-width: 0; }
-        .integration-reference .category-icon { margin-top: 3px; }
-        .integration-reference strong { margin-bottom: 4px; }
-        .integration-reference span span { font-size: 0.9375rem; line-height: 1.5; }
-        .integration-reference:hover { border-color: #93b4eb; background: #f8faff; }
-        .integration-reference:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
-        .integration-page h2 { display: flex; align-items: center; gap: 12px; }
-        .integration-page h2 .category-icon { color: #2563eb; width: 24px; height: 24px; }
+        .integration-reference > span:nth-child(2) {
+            flex: 1;
+            min-width: 0;
+        }
+        .integration-reference .category-icon {
+            margin-top: 3px;
+        }
+        .integration-reference strong {
+            margin-bottom: 4px;
+        }
+        .integration-reference span span {
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+        .integration-reference:hover {
+            border-color: #93b4eb;
+            background: #f8faff;
+        }
+        .integration-reference:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 3px;
+        }
+        .integration-page h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .integration-page h2 .category-icon {
+            color: #2563eb;
+            width: 24px;
+            height: 24px;
+        }
         .integration-note {
             margin: 28px 0;
             padding: 20px 24px;
@@ -1448,30 +1506,81 @@ export class FdlModifierExplorer extends LitElement {
             background: #f5f3ff;
             border-radius: 0 10px 10px 0;
         }
-        .integration-note h2 { margin-top: 0; font-size: 1.125rem; }
-        .integration-note p { margin-bottom: 0; }
-        .integration-page table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; }
-        .integration-page th, .integration-page td {
+        .integration-note h2 {
+            margin-top: 0;
+            font-size: 1.125rem;
+        }
+        .integration-note p {
+            margin-bottom: 0;
+        }
+        .integration-page table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 32px;
+        }
+        .integration-page th,
+        .integration-page td {
             padding: 16px;
             text-align: left;
             vertical-align: top;
             border-bottom: 1px solid #dfe3ee;
             line-height: 1.65;
         }
-        .integration-page thead { background: #eff6ff; }
-        .integration-page tbody th { width: 30%; font-weight: 600; }
-        .integration-row-label { display: flex; align-items: flex-start; gap: 10px; }
-        .integration-row-label .category-icon { margin-top: 3px; color: #475569; }
-        .integration-checklist { list-style: none; padding: 0; }
-        .integration-checklist li { position: relative; padding: 14px 16px 14px 44px; border-bottom: 1px solid #dfe3ee; }
-        .integration-checklist li::before { content: '□'; position: absolute; left: 14px; color: #166534; font-weight: 700; }
+        .integration-page thead {
+            background: #eff6ff;
+        }
+        .integration-page tbody th {
+            width: 30%;
+            font-weight: 600;
+        }
+        .integration-row-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .integration-row-label .category-icon {
+            margin-top: 3px;
+            color: #475569;
+        }
+        .integration-checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .integration-checklist li {
+            position: relative;
+            padding: 14px 16px 14px 44px;
+            border-bottom: 1px solid #dfe3ee;
+        }
+        .integration-checklist li::before {
+            content: '□';
+            position: absolute;
+            left: 14px;
+            color: #166534;
+            font-weight: 700;
+        }
         @media (max-width: 700px) {
-            .integration-header { padding: 20px; }
-            .integration-flow, .integration-references { grid-template-columns: minmax(0, 1fr); }
-            .integration-flow { gap: 20px; }
-            .integration-flow li + li::before { content: none; }
-            .integration-page th, .integration-page td { padding: 12px 8px; overflow-wrap: anywhere; }
-            .integration-row-label { flex-direction: column; gap: 4px; }
+            .integration-header {
+                padding: 20px;
+            }
+            .integration-flow,
+            .integration-references {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .integration-flow {
+                gap: 20px;
+            }
+            .integration-flow li + li::before {
+                content: none;
+            }
+            .integration-page th,
+            .integration-page td {
+                padding: 12px 8px;
+                overflow-wrap: anywhere;
+            }
+            .integration-row-label {
+                flex-direction: column;
+                gap: 4px;
+            }
         }
         .reference-content {
             overflow-wrap: anywhere;
@@ -1480,7 +1589,7 @@ export class FdlModifierExplorer extends LitElement {
             max-width: 100%;
             height: auto;
         }
-        .reference-content img[alt="Bizallele logo"] {
+        .reference-content img[alt='Bizallele logo'] {
             width: 240px;
         }
         .reference-content pre {
@@ -1785,7 +1894,10 @@ export class FdlModifierExplorer extends LitElement {
         }
         .demo-grid {
             display: grid;
-            grid-template-columns: var(--example-inspector-columns, minmax(0, 1fr) minmax(0, 1fr));
+            grid-template-columns: var(
+                --example-inspector-columns,
+                minmax(0, 1fr) minmax(0, 1fr)
+            );
             gap: 24px;
             padding: 0 20px 24px;
         }

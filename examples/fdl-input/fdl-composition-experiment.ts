@@ -345,9 +345,10 @@ export class FdlCompositionExperiment extends LitElement {
             <section aria-label="Compare all outcomes"
                 ><h3>2. Compare the possibilities</h3
                 ><p
-                    >Each cell runs a real Bizallele record with the rules above.
-                    Select a cell to inspect its exact example. When you edit
-                    the form, the grid highlights the matching kind of case.</p
+                    >Each cell runs a real Bizallele record with the rules
+                    above. Select a cell to inspect its exact example. When you
+                    edit the form, the grid highlights the matching kind of
+                    case.</p
                 >${this.outcomes()}</section
             >
             <section class="selected-case" aria-labelledby="selected-case-title"

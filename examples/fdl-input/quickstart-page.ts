@@ -70,8 +70,9 @@ export function renderQuickstart() {
         >
         <h2>Create a local application</h2>
         <p
-            >Publication as <code>@pmcelhaney/bizallele</code> is pending. Once it is published, create a new application and install the package. Lit
-            supplies the components; Vite runs the application locally.</p
+            >Publication as <code>@pmcelhaney/bizallele</code> is pending. Once
+            it is published, create a new application and install the package.
+            Lit supplies the components; Vite runs the application locally.</p
         >
         <fdl-code-snippet>
             <pre class="code"><code>mkdir bizallele-first-form
@@ -83,7 +84,8 @@ npm install --save-dev vite@5.4.21 typescript@4.6.4</code></pre>
         <p
             >No repository checkout or package build is needed. The npm package
             includes compiled JavaScript, TypeScript declarations, and the
-            <code>@pmcelhaney/bizallele/lit/fdl-field</code> adapter used below.</p
+            <code>@pmcelhaney/bizallele/lit/fdl-field</code> adapter used
+            below.</p
         >
         <p
             >Create an <code>index.html</code> with the following body and save
@@ -132,11 +134,11 @@ npm install --save-dev vite@5.4.21 typescript@4.6.4</code></pre>
         <p
             >The model and view files on modifier pages run inside this
             repository’s example environment. Their model imports use
-            <code>@pmcelhaney/bizallele</code>, and their field and table imports use
-            <code>@pmcelhaney/bizallele/lit/</code>. The source tabs display the exact
-            files that run the live examples. Copy the model, view, and any
-            local sample-data or style files into your app; the Lit elements
-            ship with the package. Run <code>npm install</code> and
+            <code>@pmcelhaney/bizallele</code>, and their field and table
+            imports use <code>@pmcelhaney/bizallele/lit/</code>. The source tabs
+            display the exact files that run the live examples. Copy the model,
+            view, and any local sample-data or style files into your app; the
+            Lit elements ship with the package. Run <code>npm install</code> and
             <code>npm run docs:dev</code> in this checkout to explore them.</p
         >
         <h2>Integrate your component stack</h2>

@@ -291,22 +291,26 @@ field
     ),
 ].sort((left, right) => left.name.localeCompare(right.name));
 
-
 export class FdlModifierCatalog extends LitElement {
-static properties = {modifier:{type:String}};
-modifier='';
-createRenderRoot(){return ['required','formatter','visible'].includes(this.modifier)?this:super.createRenderRoot();}
-render() {
-    const directory = liveExamples[this.modifier]?.directory;
-    const tagName = directory === 'text-length'
-        ? 'fdl-text-length'
-        : directory === 'column-widths'
-          ? 'fdl-column-widths'
-          : 'fdl-live-' + this.modifier.toLowerCase();
-    const tag = unsafeStatic(tagName);
-    return html`<${tag}></${tag}>`;
-}
-static styles = css`
+    static properties = { modifier: { type: String } };
+    modifier = '';
+    createRenderRoot() {
+        return ['required', 'formatter', 'visible'].includes(this.modifier)
+            ? this
+            : super.createRenderRoot();
+    }
+    render() {
+        const directory = liveExamples[this.modifier]?.directory;
+        const tagName =
+            directory === 'text-length'
+                ? 'fdl-text-length'
+                : directory === 'column-widths'
+                  ? 'fdl-column-widths'
+                  : 'fdl-live-' + this.modifier.toLowerCase();
+        const tag = unsafeStatic(tagName);
+        return html`<${tag}></${tag}>`;
+    }
+    static styles = css`
         .validator-example + .validator-example {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -340,7 +344,10 @@ static styles = css`
         }
         @container (min-width:760px) {
             .focused:not(.full-width) {
-                grid-template-columns: var(--example-inspector-columns, minmax(0, 1.1fr) minmax(0, 1fr));
+                grid-template-columns: var(
+                    --example-inspector-columns,
+                    minmax(0, 1.1fr) minmax(0, 1fr)
+                );
             }
         }
         .focused-demo > .try:first-child {
@@ -478,4 +485,4 @@ static styles = css`
         ${exampleTheme}
     `;
 }
-customElements.define('fdl-modifier-catalog',FdlModifierCatalog);
+customElements.define('fdl-modifier-catalog', FdlModifierCatalog);

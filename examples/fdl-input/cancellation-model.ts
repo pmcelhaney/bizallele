@@ -1,5 +1,11 @@
-import { cancellationFields, type CancellationRules } from './cancellation-rules';
-export { cancellationFields, type CancellationRules } from './cancellation-rules';
+import {
+    cancellationFields,
+    type CancellationRules,
+} from './cancellation-rules';
+export {
+    cancellationFields,
+    type CancellationRules,
+} from './cancellation-rules';
 import { Record } from '@pmcelhaney/bizallele';
 export const cancellationCases = [
     {

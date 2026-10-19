@@ -30,12 +30,18 @@ export class DeliveryForm extends LitElement {
         css`
             .experiment {
                 display: grid;
-                grid-template-columns: var(--example-inspector-columns, repeat(2, minmax(0, 1fr)));
+                grid-template-columns: var(
+                    --example-inspector-columns,
+                    repeat(2, minmax(0, 1fr))
+                );
                 gap: 20px;
                 align-items: start;
             }
             .experiment:has(fdl-record-inspector[collapsed]) {
-                grid-template-columns: var(--example-inspector-columns, minmax(0, 1fr) auto);
+                grid-template-columns: var(
+                    --example-inspector-columns,
+                    minmax(0, 1fr) auto
+                );
             }
             @media (max-width: 1000px) {
                 .experiment,

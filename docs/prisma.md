@@ -82,7 +82,7 @@ and datasource blocks, multiline attributes, and quoted attribute arguments are
 parsed without executing any expressions. It does not claim support for the
 Prisma 8 contract language or perform Prisma's full semantic schema validation.
 
-| Prisma declaration                | Bizallele behavior                                                                                                                            |
+| Prisma declaration                | Bizallele behavior                                                                                                                      |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | `String`                          | Requires a JavaScript string; an empty string is valid.                                                                                 |
 | `Int`                             | Requires a number that is an integer in the range −2,147,483,648 through 2,147,483,647.                                                 |

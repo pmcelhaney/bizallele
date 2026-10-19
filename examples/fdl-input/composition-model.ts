@@ -1,5 +1,11 @@
 import { hasStreetNumber, type CompositionRules } from './composition-rules';
-export { compositionFields, compositionRecord, defaultCompositionRules, hasStreetNumber, type CompositionRules } from './composition-rules';
+export {
+    compositionFields,
+    compositionRecord,
+    defaultCompositionRules,
+    hasStreetNumber,
+    type CompositionRules,
+} from './composition-rules';
 
 export const addressCases = [
     { id: 'empty', title: 'Empty', value: '' },

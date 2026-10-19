@@ -61,7 +61,9 @@ describe('modifier explorer', () => {
         root.querySelector<HTMLButtonElement>('.primary')!.click();
         await settle(page);
         expect(root.querySelector('.result')!.textContent).toContain('The record is valid');
-        example.shadowRoot!.querySelector<HTMLButtonElement>('[role="tab"][id="example-tab-1"]')!.click();
+        example
+            .shadowRoot!.querySelector<HTMLButtonElement>('[role="tab"][id="example-tab-1"]')!
+            .click();
         await example.updateComplete;
 
         for (const destination of ['#integration', '#formatter']) {
@@ -72,8 +74,12 @@ describe('modifier explorer', () => {
             window.dispatchEvent(new Event('hashchange'));
             await settle(page);
             expect(root.querySelector('fdl-example')).toBe(example);
-            expect(example.shadowRoot!.querySelector('[aria-selected="true"]')!.textContent).toContain('required-model.js');
-            expect(root.querySelector('fdl-field')!.shadowRoot!.querySelector('input')!.value).toBe('Ada Review');
+            expect(
+                example.shadowRoot!.querySelector('[aria-selected="true"]')!.textContent
+            ).toContain('required-model.js');
+            expect(root.querySelector('fdl-field')!.shadowRoot!.querySelector('input')!.value).toBe(
+                'Ada Review'
+            );
             expect(root.querySelector('.result')!.textContent).toContain('The record is valid');
         }
 
@@ -572,9 +578,7 @@ describe('Bizallele site pages', () => {
     it('opens Home by default and separates site pages from the modifier reference', async () => {
         const page = await openPage('');
         const root = page.shadowRoot!;
-        expect(root.querySelector('h1')!.textContent).toBe(
-            'Genetic code for business rules.'
-        );
+        expect(root.querySelector('h1')!.textContent).toBe('Genetic code for business rules.');
         expect(root.querySelector('.site-page')!.textContent).toContain('Recordset');
         expect(root.querySelector('.site-nav a[href="#quickstart"]')?.textContent).toContain(
             'Your first form'
@@ -601,9 +605,7 @@ describe('Bizallele site pages', () => {
         window.location.hash = 'home';
         window.dispatchEvent(new Event('hashchange'));
         await settle(page);
-        expect(root.querySelector('h1')!.textContent).toBe(
-            'Genetic code for business rules.'
-        );
+        expect(root.querySelector('h1')!.textContent).toBe('Genetic code for business rules.');
         expect(document.title).toBe('Home — Bizallele');
     });
 });
@@ -692,7 +694,9 @@ it('updates emptiness and validation for required and optional references as the
             await inspector.updateComplete;
             const status = inspector.shadowRoot!.querySelector(`[data-field="${name}"]`)!;
             expect(inspector.record!.field(name).empty).toBe(empty);
-            expect(!!status.querySelector('[aria-label="Invalid"]')).toBe(name === 'emptyCode' && empty);
+            expect(!!status.querySelector('[aria-label="Invalid"]')).toBe(
+                name === 'emptyCode' && empty
+            );
         }
     }
 });

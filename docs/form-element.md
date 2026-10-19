@@ -148,10 +148,10 @@ The complete ownership boundary is documented in the
 
 ## Properties
 
-| Property               | Required              | Purpose                                                                                                                                                                                                                                         |
-| ---------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `field`                | Yes                   | Names the field in `record` that this instance renders.                                                                                                                                                                                         |
-| `record`               | Inherited or explicit | Supplies the field definition, value, and model behavior.                                                                                                                                                                                       |
+| Property               | Required              | Purpose                                                                                                                                                                                                                                               |
+| ---------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `field`                | Yes                   | Names the field in `record` that this instance renders.                                                                                                                                                                                               |
+| `record`               | Inherited or explicit | Supplies the field definition, value, and model behavior.                                                                                                                                                                                             |
 | `showValidationErrors` | No                    | When `true`, exposes current synchronous Bizallele errors in the UI and accessibility tree. Defaults to `false`, using automatic blur/submit timing. Set `true` to reveal errors explicitly. The corresponding attribute is `show-validation-errors`. |
 
 ## A unified field component
