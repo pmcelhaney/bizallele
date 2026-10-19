@@ -805,7 +805,7 @@ export class FdlModifierExplorer extends LitElement {
             <footer class="site-footer">
                 <div>
                     <nav aria-label="Project links">
-                        <a href="https://github.com/pmcelhaney/FDL">GitHub</a>
+                        <a href="https://github.com/pmcelhaney/bizallele">GitHub</a>
                         <a href="https://patrickmcelhaney.org">Patrick McElhaney</a>
                     </nav>
                     <p>Bizallele is a work in progress. Version 1.0 is expected in November 2026.</p>

@@ -356,7 +356,7 @@ export function renderSitePage(
         <h2>Get the repository</h2>
         <p
             >Start with the
-            <a href="https://github.com/pmcelhaney/FDL">Bizallele repository</a> and
+            <a href="https://github.com/pmcelhaney/bizallele">Bizallele repository</a> and
             its
             <a href="#reference/AGENTS"
                 >contributor guide</a
