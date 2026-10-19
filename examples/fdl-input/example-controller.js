@@ -4,7 +4,7 @@ import { Record, Recordset } from '@pmcelhaney/bizallele';
 const initialFieldTypes = new WeakMap();
 
 // Exported examples retain their identity when the documentation recreates a
-// view. Restore their starting values and rules for Reset example and revisits.
+// view. Restore their starting values and rules for a new example or explicit reset.
 export function resetExampleRecord(record) {
     if (!initialFieldTypes.has(record)) {
         initialFieldTypes.set(record, { ...record.fieldTypes });
@@ -16,13 +16,17 @@ export function resetExampleRecord(record) {
 // Shared lifecycle for the small live examples. Rules and rendering stay in
 // each example's model and view files.
 export class ExampleController extends LitElement {
+    initialized = false;
     refreshExample = () => {
         this.requestUpdate();
     };
     connectedCallback() {
         super.connectedCallback();
-        for (const value of Object.values(this)) {
-            if (value instanceof Record) resetExampleRecord(value);
+        if (!this.initialized) {
+            for (const value of Object.values(this)) {
+                if (value instanceof Record) resetExampleRecord(value);
+            }
+            this.initialized = true;
         }
         this.listenToModels('addEventListener');
     }

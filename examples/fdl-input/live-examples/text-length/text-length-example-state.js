@@ -37,6 +37,7 @@ export class ExampleModel extends LitElement {
     }
     record = record;
     checked = false;
+    initialized = false;
     refresh = () => this.requestUpdate();
     changeRules = () => {
         this.record.addField(
@@ -48,7 +49,10 @@ export class ExampleModel extends LitElement {
     };
     connectedCallback() {
         super.connectedCallback();
-        resetExampleRecord(this.record);
+        if (!this.initialized) {
+            resetExampleRecord(this.record);
+            this.initialized = true;
+        }
         this.settings.addEventListener('change', this.changeRules);
         this.record.addEventListener('change', this.refresh);
     }

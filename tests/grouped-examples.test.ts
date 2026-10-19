@@ -4,6 +4,24 @@ import '../examples/fdl-input/fdl-text-length';
 
 afterEach(() => document.body.replaceChildren());
 
+it('preserves text length values and rules when a retained example reconnects', async () => {
+    const demo = document.createElement('fdl-text-length') as any;
+    document.body.append(demo);
+    await demo.updateComplete;
+    demo.settings.setField('minimum', 8);
+    demo.record.setField('code', 'RETAINED');
+    demo.checked = true;
+    await demo.updateComplete;
+    demo.remove();
+    document.body.append(demo);
+    await demo.updateComplete;
+    expect(demo.record.getField('code')).toBe('RETAINED');
+    expect(demo.record.field('code').valid).toBe(true);
+    demo.record.setField('code', 'SHORT');
+    expect(demo.record.field('code').valid).toBe(false);
+    expect(demo.checked).toBe(true);
+});
+
 it.each([
     ['fdl-column-widths', 'column-widths'],
     ['fdl-text-length', 'text-length'],

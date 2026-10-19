@@ -50,6 +50,41 @@ afterEach(() => {
 });
 
 describe('modifier explorer', () => {
+    it('retains a modifier experiment and source tab through reference and modifier detours until reset', async () => {
+        const page = await openPage('#required');
+        const root = page.shadowRoot!;
+        const example = root.querySelector('fdl-example') as FdlExample;
+        await example.updateComplete;
+        const input = root.querySelector('fdl-field')!.shadowRoot!.querySelector('input')!;
+        input.value = 'Ada Review';
+        input.dispatchEvent(new Event('input'));
+        root.querySelector<HTMLButtonElement>('.primary')!.click();
+        await settle(page);
+        expect(root.querySelector('.result')!.textContent).toContain('The record is valid');
+        example.shadowRoot!.querySelector<HTMLButtonElement>('[role="tab"][id="example-tab-1"]')!.click();
+        await example.updateComplete;
+
+        for (const destination of ['#integration', '#formatter']) {
+            window.location.hash = destination;
+            window.dispatchEvent(new Event('hashchange'));
+            await settle(page);
+            window.location.hash = '#required';
+            window.dispatchEvent(new Event('hashchange'));
+            await settle(page);
+            expect(root.querySelector('fdl-example')).toBe(example);
+            expect(example.shadowRoot!.querySelector('[aria-selected="true"]')!.textContent).toContain('required-model.js');
+            expect(root.querySelector('fdl-field')!.shadowRoot!.querySelector('input')!.value).toBe('Ada Review');
+            expect(root.querySelector('.result')!.textContent).toContain('The record is valid');
+        }
+
+        example.shadowRoot!.querySelector<HTMLButtonElement>('#example-tab-0')!.click();
+        await example.updateComplete;
+        root.querySelector<HTMLButtonElement>('.reset')!.click();
+        await settle(page);
+        expect(await stateText(page)).toContain('(empty string)');
+        expect(root.querySelector('.result')!.textContent).toContain('The model is invalid');
+    });
+
     it('shows the populated address in the semantic-type example source', () => {
         const source = exampleSource('semanticType').definition;
 

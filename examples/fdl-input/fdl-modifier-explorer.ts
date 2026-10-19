@@ -12,7 +12,7 @@ import {
     columnSettingResults,
 } from './modifier-signatures';
 import { categoryIcon, categoryDescriptions } from './category-icon';
-import { LitElement, css, html } from 'lit';
+import { LitElement, css, html, render, type TemplateResult } from 'lit';
 import { renderSitePage, sitePages, type SitePage } from './fdl-site-pages';
 import { exampleSource } from './modifier-example-source';
 import { exampleTheme } from './example-theme';
@@ -81,6 +81,20 @@ export const explorerRecipes: ExplorerRecipe[] = [
 const recipes = explorerRecipes;
 
 export class FdlModifierExplorer extends LitElement {
+    // Keep visited experiments and source tabs for this explorer's lifetime.
+    // Reset still replaces the example through its versioned key.
+    private modifierViews = new Map<string, HTMLElement>();
+
+    private retainModifierView(name: string, content: TemplateResult) {
+        let view = this.modifierViews.get(name);
+        if (!view) {
+            view = document.createElement('div');
+            view.style.display = 'contents';
+            this.modifierViews.set(name, view);
+        }
+        render(content, view, { host: this });
+        return view;
+    }
     private compositionView?: { route: string; element: HTMLElement };
     private compositionForPage() {
         if (this.page !== 'composition') return undefined;
@@ -765,7 +779,7 @@ export class FdlModifierExplorer extends LitElement {
                                             >`
                                           : ''
                                   }
-                                  ${group.title === 'Column widths' ? this.renderColumnWidths() : group.title === 'Text length' ? this.renderTextLength() : group.names.map(name => keyed(name, this.renderModifierSection(recipes.find(entry => entry.name === name)!)))}
+                                  ${group.title === 'Column widths' ? this.retainModifierView('column-widths', this.renderColumnWidths()) : group.title === 'Text length' ? this.retainModifierView('text-length', this.renderTextLength()) : group.names.map(name => keyed(name, this.retainModifierView(name, this.renderModifierSection(recipes.find(entry => entry.name === name)!))))}
                                   <footer
                                       ><button
                                           class="pager"
