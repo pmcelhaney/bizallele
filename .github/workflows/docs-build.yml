@@ -20,7 +20,12 @@ jobs:
                   cache: npm
                   cache-dependency-path: package-lock.json
             - run: npm ci
-            - run: npm run docs:build -- --base /FDL/
+            - name: Read Pages configuration
+              id: pages
+              uses: actions/configure-pages@v5
+            - run: npm run docs:build -- --base "$PAGES_BASE_PATH/"
+              env:
+                  PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
             - name: Upload site
               if: github.event_name != 'pull_request'
               uses: actions/upload-pages-artifact@v3

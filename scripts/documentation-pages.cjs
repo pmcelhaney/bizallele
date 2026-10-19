@@ -60,6 +60,7 @@ function loadDocumentation() {
                 const href = token.attrGet('href');
                 if (
                     href.startsWith('http://localhost:5173/#') ||
+                    href.startsWith('https://bizallele.dev/#') ||
                     href.startsWith('https://patrickmcelhaney.org/FDL/#')
                 ) {
                     token.attrSet('href', href.slice(href.indexOf('#')));
