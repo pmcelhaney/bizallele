@@ -50,7 +50,8 @@ const lessons = [
         question: 'How do the rules work across records?',
         explanation:
             'Reuse the same definitions for a table of deliveries. Edit the current delivery above; its table row updates. Other rows show the same rules applied to different values.',
-        reference: 'compareFunction',
+        reference: 'reference/docs/recordset',
+        referenceLabel: 'Explore the Recordset API',
         rule: 'A Recordset reuses the field definitions for multiple records.',
     },
 ];
@@ -186,8 +187,7 @@ export class FdlLearningPath extends LitElement {
                 >
                 <p
                     ><a href=${`#${lesson.reference}`}
-                        >Explore ${lesson.reference} in the modifier
-                        reference</a
+                        >${lesson.referenceLabel ?? `Explore ${lesson.reference} in the modifier reference`}</a
                     ></p
                 >
                 ${
