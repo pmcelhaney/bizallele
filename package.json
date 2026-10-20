@@ -79,7 +79,7 @@
         "jest-environment-jsdom": "^29.7.0",
         "markdown-it": "^12.3.2",
         "prettier": "^3.9.10",
-        "regenerator-runtime": "^0.13.9",
+        "regenerator-runtime": "^0.14.0",
         "ts-jest": "^29.4.15",
         "typescript": "~5.9.3",
         "vite": "^5.4.19",
