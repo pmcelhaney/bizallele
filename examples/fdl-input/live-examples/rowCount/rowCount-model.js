@@ -1,4 +1,4 @@
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 export function commentType(rows = 4) {
     return field.label('Comments').rowCount(rows);

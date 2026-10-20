@@ -1,4 +1,4 @@
-import { field, Recordset } from '@pmcelhaney/bizallele';
+import { field, Recordset } from 'bizallele';
 import { shirtOrders } from '../../shirt-size-example';
 export const recordset = new Recordset(
     {

@@ -1,7 +1,7 @@
-import '@pmcelhaney/bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-record';
 import { compositionView } from './composition-view';
 import './fdl-code-snippet';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import './fdl-prediction';
 import { learningContinuation } from './learning-continuation';
 import { LitElement, css, html } from 'lit';
@@ -18,7 +18,7 @@ import {
     defaultCompositionRules,
     type CompositionRules,
 } from './composition-model';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 export class FdlCompositionExperiment extends LitElement {
     private continuation = learningContinuation(window.location.hash);

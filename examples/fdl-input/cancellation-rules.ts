@@ -1,4 +1,4 @@
-import { field } from '@pmcelhaney/bizallele';
+import { field } from 'bizallele';
 export type CancellationRules = {
     visibility: 'always' | 'cancelled';
     requiredness: 'always' | 'cancelled' | 'never';

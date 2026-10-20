@@ -1,8 +1,5 @@
-import { field } from '@pmcelhaney/bizallele';
-import {
-    inputTypes,
-    type inputType,
-} from '@pmcelhaney/bizallele/types/input-types.types';
+import { field } from 'bizallele';
+import { inputTypes, type inputType } from 'bizallele/types/input-types.types';
 
 export const inputTypeChoices = inputTypes.map(value => ({
     text: value,

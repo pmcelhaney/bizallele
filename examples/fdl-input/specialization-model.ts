@@ -1,4 +1,4 @@
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 export function createSpecializations() {
     const base = field.label('Name');

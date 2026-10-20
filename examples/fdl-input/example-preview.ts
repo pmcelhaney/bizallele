@@ -2,13 +2,13 @@ import * as lit from 'lit';
 import * as keyed from 'lit/directives/keyed.js';
 import * as unsafeHtml from 'lit/directives/unsafe-html.js';
 import * as staticHtml from 'lit/static-html.js';
-import * as bizallele from '@pmcelhaney/bizallele';
-import * as inputTypes from '@pmcelhaney/bizallele/types/input-types.types';
-import * as recordContext from '@pmcelhaney/bizallele/lit/record-context';
-import '@pmcelhaney/bizallele/lit/fdl-address';
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-record';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import * as bizallele from 'bizallele';
+import * as inputTypes from 'bizallele/types/input-types.types';
+import * as recordContext from 'bizallele/lit/record-context';
+import 'bizallele/lit/fdl-address';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-table';
 import { createExampleLoader } from './example-module-loader';
 import originalSources from 'virtual:example-sources';
 
@@ -50,13 +50,13 @@ window.addEventListener('message', async event => {
             'lit/directives/keyed.js': keyed,
             'lit/directives/unsafe-html.js': unsafeHtml,
             'lit/static-html.js': staticHtml,
-            '@pmcelhaney/bizallele': bizallele,
-            '@pmcelhaney/bizallele/types/input-types.types': inputTypes,
-            '@pmcelhaney/bizallele/lit/record-context': recordContext,
-            '@pmcelhaney/bizallele/lit/fdl-address': {},
-            '@pmcelhaney/bizallele/lit/fdl-field': {},
-            '@pmcelhaney/bizallele/lit/fdl-record': {},
-            '@pmcelhaney/bizallele/lit/fdl-table': {},
+            bizallele: bizallele,
+            'bizallele/types/input-types.types': inputTypes,
+            'bizallele/lit/record-context': recordContext,
+            'bizallele/lit/fdl-address': {},
+            'bizallele/lit/fdl-field': {},
+            'bizallele/lit/fdl-record': {},
+            'bizallele/lit/fdl-table': {},
         });
         const content = document.createElement('template');
         content.innerHTML = markup;

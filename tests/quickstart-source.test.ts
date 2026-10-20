@@ -17,8 +17,8 @@ it('type-checks the complete copied first-form script against the source package
         noEmit: true,
         baseUrl: process.cwd(),
         paths: {
-            '@pmcelhaney/bizallele': ['src/index.js'],
-            '@pmcelhaney/bizallele/*': ['src/*'],
+            bizallele: ['src/index.js'],
+            'bizallele/*': ['src/*'],
         },
     };
     const host = ts.createCompilerHost(options);

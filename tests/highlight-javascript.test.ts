@@ -13,7 +13,7 @@ it('provides generic help for every supported modifier in actual source', () => 
     expect(Object.keys(modifierDescriptions).sort()).toEqual(
         Object.keys(modifierSignatures).sort()
     );
-    const code = `import { field } from '@pmcelhaney/bizallele';
+    const code = `import { field } from 'bizallele';
 const address = field.label('Shipping address')
     .visible(whenShipping)
     .required(whenShipping)

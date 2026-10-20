@@ -7,8 +7,8 @@ module.exports = {
         '/node_modules/(?!(@lit/reactive-element|@open-wc/testing-helpers|lit|lit-element|lit-html|yaml)/)',
     ],
     moduleNameMapper: {
-        '^@pmcelhaney/bizallele$': '<rootDir>/src/index.js',
-        '^@pmcelhaney/bizallele/(.*)$': '<rootDir>/src/$1',
+        '^bizallele$': '<rootDir>/src/index.js',
+        '^bizallele/(.*)$': '<rootDir>/src/$1',
     },
     watchman: false,
     testEnvironment: 'jsdom',

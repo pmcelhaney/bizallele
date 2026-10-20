@@ -1,9 +1,9 @@
 import { codeType, record } from './text-length-model.js';
 import { LitElement } from 'lit';
 import { resetExampleRecord } from '../../example-controller';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import '../../fdl-example';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 import '../../fdl-record-inspector';
 export class ExampleModel extends LitElement {
     settings = new Record(

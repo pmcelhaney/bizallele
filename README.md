@@ -19,7 +19,7 @@ rules; your components choose how to express them.
 Bizallele is a work in progress. **Version 1.0 is expected to ship in November 2026.**
 The API and documentation may change before that release.
 
-Previously named FDL. The package is being renamed to `@pmcelhaney/bizallele`;
+Previously named FDL. The package is being renamed to `bizallele`;
 publication under the new name is pending. The installation commands below
 apply once that package is published. Existing `fdl-*` custom elements and
 exported `Fdl*` classes keep their names.
@@ -27,7 +27,7 @@ exported `Fdl*` classes keep their names.
 ## Installation
 
 ```sh
-npm install @pmcelhaney/bizallele
+npm install bizallele
 ```
 
 ## Try a rule without a UI
@@ -37,7 +37,7 @@ binds field definitions to a set of values; a **Recordset** manages a collection
 of records that share definitions.
 
 ```js
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 const account = new Record(
     {
@@ -73,15 +73,15 @@ shaping, cross-field rules, safe error responses, and asynchronous validators.
 The package includes styled Lit elements for fields, nested addresses, and tables:
 
 ```js
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-record';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-table';
 ```
 
 Group controls with `<fdl-record .record=${record}>` and give each child
 `<fdl-field field="name">` its field name. Use
 `<fdl-table .recordset=${recordset}>` in Lit templates. Importing the table
-module also registers `<fdl-column>`. Import `@pmcelhaney/bizallele/lit` for all
+module also registers `<fdl-column>`. Import `bizallele/lit` for all
 components and their classes. See [Form elements](docs/form-element.md) for
 registration, properties, and custom styling.
 
@@ -93,7 +93,7 @@ Once the renamed package is published, install it in a new application:
 mkdir bizallele-first-form
 cd bizallele-first-form
 npm init -y
-npm install @pmcelhaney/bizallele lit
+npm install bizallele lit
 npm install --save-dev vite@5.4.21 typescript@4.6.4
 ```
 

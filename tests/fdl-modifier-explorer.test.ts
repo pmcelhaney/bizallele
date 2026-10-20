@@ -1,5 +1,5 @@
 import type { FdlExample } from '../examples/fdl-input/fdl-example';
-import type { FdlField } from '@pmcelhaney/bizallele/lit/fdl-field';
+import type { FdlField } from 'bizallele/lit/fdl-field';
 import FieldTypeBuilder from '../src/field-type-builder';
 import { inputTypes } from '../src/types/input-types.types';
 import { modifierPage, modifierPageGroups } from '../examples/fdl-input/modifier-page-groups';

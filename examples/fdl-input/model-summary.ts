@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { Record } from '@pmcelhaney/bizallele';
+import { Record } from 'bizallele';
 
 export const describeValue = (value: unknown): string => {
     if (typeof value === 'number' && !Number.isFinite(value))

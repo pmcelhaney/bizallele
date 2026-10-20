@@ -1,4 +1,4 @@
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import { assigneeDirectory, optionsDelay } from '../../assignee-options';
 export const record = new Record(
     {

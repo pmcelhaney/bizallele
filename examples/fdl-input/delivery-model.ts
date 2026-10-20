@@ -1,5 +1,5 @@
 // Defines delivery fields, conditional rules, ZIP validation, and store lookup.
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import {
     deliveryMethodOptions,
     shippingStateOptions,

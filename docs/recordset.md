@@ -12,7 +12,7 @@ aggregation, filtering, column classes, alignment, and width guidance.
 Use the same definition map for every row:
 
 ```js
-import { boolean, Recordset, string } from '@pmcelhaney/bizallele';
+import { boolean, Recordset, string } from 'bizallele';
 
 const fields = {
     id: string,
@@ -114,7 +114,7 @@ Useful read-only properties include `allRecords`, `currentPage`,
 number of rows using an explicit row factory owned by the application.
 
 ```js
-import ExampleRecordset from '@pmcelhaney/bizallele/example-recordset';
+import ExampleRecordset from 'bizallele/example-recordset';
 
 const exampleReports = new ExampleRecordset(fields, 100, index => ({
     id: String(index + 1),

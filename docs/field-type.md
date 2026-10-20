@@ -430,7 +430,7 @@ For example, a table component can construct a recordset, load its first page,
 and render each row through the field facade:
 
 ```js
-import { field, Recordset } from '@pmcelhaney/bizallele';
+import { field, Recordset } from 'bizallele';
 
 const people = new Recordset({ name: field.label('Name'), city: field.label('City') }, [
     { name: 'Zulu', city: 'Oslo' },

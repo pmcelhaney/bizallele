@@ -12,8 +12,8 @@ adapter explicitly; Bizallele's main entry does not load Zod.
 
 ```javascript
 import { z } from 'zod/v4';
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromZod } from '@pmcelhaney/bizallele/zod';
+import { Record } from 'bizallele';
+import { fieldsFromZod } from 'bizallele/zod';
 
 const schema = z.object({
     name: z.string().min(1),

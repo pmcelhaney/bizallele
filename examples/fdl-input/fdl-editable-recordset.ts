@@ -10,8 +10,8 @@ import {
     applyShipmentView,
     shipmentTotals,
 } from './editable-recordset-model';
-import type { Record } from '@pmcelhaney/bizallele';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import type { Record } from 'bizallele';
+import 'bizallele/lit/fdl-field';
 import './fdl-recordset-inspector';
 
 export class FdlEditableRecordset extends LitElement {

@@ -26,6 +26,7 @@ jobs:
             - run: npm run docs:build -- --base "$PAGES_BASE_PATH/"
               env:
                   PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+                  PUBLIC_GOOGLE_ANALYTICS_ID: G-2QHMETF62T
             - name: Upload site
               if: github.event_name != 'pull_request'
               uses: actions/upload-pages-artifact@v3

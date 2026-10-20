@@ -8,7 +8,7 @@ Use `field(name)` to access the complete field-scoped facade, including its
 value, parsing, formatting, options, and validation.
 
 ```js
-import { Record, string } from '@pmcelhaney/bizallele';
+import { Record, string } from 'bizallele';
 
 const account = new Record(
     {

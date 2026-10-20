@@ -1,7 +1,7 @@
 import '../examples/fdl-input/fdl-editable-recordset';
 import type { FdlEditableRecordset } from '../examples/fdl-input/fdl-editable-recordset';
-import type { FdlTable } from '@pmcelhaney/bizallele/lit/fdl-table';
-import type { FdlField } from '@pmcelhaney/bizallele/lit/fdl-field';
+import type { FdlTable } from 'bizallele/lit/fdl-table';
+import type { FdlField } from 'bizallele/lit/fdl-field';
 import {
     createShipments,
     applyShipmentView,

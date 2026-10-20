@@ -1,6 +1,6 @@
 import { recordset } from './filter-model.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-table';
 export function filterView(filters = {}, onFiltersChanged = () => {}) {
     return html`<fdl-table
         .recordset=${recordset}

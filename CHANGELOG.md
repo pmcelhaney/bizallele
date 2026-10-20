@@ -8,14 +8,14 @@ All notable changes to Bizallele will be documented in this file. The format fol
 
 ### Changed
 
-- Rename FDL to Bizallele, with the package name `@pmcelhaney/bizallele`.
-  Update imports from `@pmcelhaney/fdl` to `@pmcelhaney/bizallele`, including
+- Rename FDL to Bizallele, with the package name `bizallele`.
+  Update imports from `@pmcelhaney/fdl` to `bizallele`, including
   subpaths. Existing `fdl-*` custom elements and exported `Fdl*` classes retain
   their names. The repository and documentation URLs retain their existing paths.
 - Use the supplied Bizallele logo in the documentation site and README.
 
 This rename is local preparation for a future release; it does not publish
-`@pmcelhaney/bizallele` to npm.
+`bizallele` to npm.
 
 ## [0.0.2] - 2026-10-16
 

@@ -1,7 +1,7 @@
 import { record, commentType } from './rowCount-model.js';
 // Tutorial state for the .rowCount() example.
 import { ExampleController } from '../../example-controller';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 export class ExampleModel extends ExampleController {
     modifier = 'rowCount';

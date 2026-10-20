@@ -1,6 +1,6 @@
 import { css, html, nothing, type PropertyValues } from 'lit';
-import { Record } from '@pmcelhaney/bizallele';
-import { RecordElement } from '@pmcelhaney/bizallele/lit/record-context';
+import { Record } from 'bizallele';
+import { RecordElement } from 'bizallele/lit/record-context';
 import { exampleTheme } from './example-theme';
 
 const statusPaths = {
