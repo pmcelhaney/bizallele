@@ -75,9 +75,9 @@ rendering. The npm package is `bizallele`.
 
 ## Working-tree and Git rules
 
-- Work directly in the repository root checkout on `main` and commit changes
-  directly to `main`. Do not create task branches or linked worktrees unless
-  the user explicitly requests one.
+- Create a linked worktree and a dedicated `codex/` task branch from
+  `origin/main` for each task. Make changes and commits in that worktree.
+  Do not commit or push directly to `main`.
 - Before starting work, check `git status --short --branch`. Identify ownership
   of existing changes and preserve unrelated work; never revert, stash, stage,
   or commit another task's changes.
@@ -93,4 +93,7 @@ rendering. The npm package is `bizallele`.
   pass, rerun the required checks before committing.
 - Use a concise, imperative commit message. Before reporting completion, check
   status again and report any remaining changes explicitly.
-- Keep commits local unless the user explicitly requests a push or deployment.
+- After the required checks pass, push the task branch and open a pull request
+  targeting `main`. Include a concise description of the changes and validation
+  results. If the user requests local-only work, keep commits local instead.
+- Do not merge pull requests or deploy unless the user explicitly requests it.
