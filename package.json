@@ -86,7 +86,7 @@
         "zod": "^4.6.7"
     },
     "overrides": {
-        "errorstacks": "2.4.1"
+        "errorstacks": "2.4.2"
     },
     "repository": {
         "type": "git",
