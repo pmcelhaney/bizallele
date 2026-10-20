@@ -114,9 +114,6 @@ export function renderSitePage(
     if (page === 'home')
         return html` <article class="site-page">
             <h1 tabindex="-1">Genetic code for business rules.</h1>
-            <p class="description"
-                >Because business logic doesn’t belong in the UI.</p
-            >
             <p
                 >Bizallele is an open source JavaScript and TypeScript library
                 that makes business rules first-class entities, independent of
