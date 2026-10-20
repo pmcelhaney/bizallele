@@ -79,7 +79,7 @@ export function renderQuickstart() {
 cd bizallele-first-form
 npm init -y
 npm install bizallele lit
-npm install --save-dev vite@5.4.21 typescript@4.6.4</code></pre>
+npm install --save-dev vite@8.3.4 typescript@6.0.3</code></pre>
         </fdl-code-snippet>
         <p
             >No repository checkout or package build is needed. The npm package
@@ -109,7 +109,7 @@ npm install --save-dev vite@5.4.21 typescript@4.6.4</code></pre>
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "skipLibCheck": true,
     "types": [],

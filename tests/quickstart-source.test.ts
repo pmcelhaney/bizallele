@@ -8,17 +8,16 @@ it('type-checks the complete copied first-form script against the source package
     const options: ts.CompilerOptions = {
         target: ts.ScriptTarget.ES2020,
         module: ts.ModuleKind.ESNext,
-        moduleResolution: ts.ModuleResolutionKind.NodeJs,
+        moduleResolution: ts.ModuleResolutionKind.Bundler,
         strict: true,
         allowJs: true,
         skipLibCheck: true,
         experimentalDecorators: true,
         useDefineForClassFields: false,
         noEmit: true,
-        baseUrl: process.cwd(),
         paths: {
-            bizallele: ['src/index.js'],
-            'bizallele/*': ['src/*'],
+            bizallele: [path.resolve('src/index.js')],
+            'bizallele/*': [path.resolve('src/*')],
         },
     };
     const host = ts.createCompilerHost(options);

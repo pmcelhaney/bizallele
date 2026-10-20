@@ -94,7 +94,7 @@ mkdir bizallele-first-form
 cd bizallele-first-form
 npm init -y
 npm install bizallele lit
-npm install --save-dev vite@5.4.21 typescript@4.6.4
+npm install --save-dev vite@8.3.4 typescript@6.0.3
 ```
 
 Follow [Your first form](https://patrickmcelhaney.org/bizallele/#quickstart) for the
