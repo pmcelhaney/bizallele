@@ -117,8 +117,8 @@ export function renderSitePage(
             <p
                 >Bizallele is an open source JavaScript and TypeScript library
                 that makes business rules first-class entities, independent of
-                UI frameworks and design systems. Define how your data
-                behaves—then reuse the same rules across forms, tables, and
+                UI frameworks and design systems. Define how your data behaves,
+                and reuse the same rules across forms, tables, and
                 <a href="#reference/docs/backend-validation"
                     >server-side validation</a
                 >.</p
