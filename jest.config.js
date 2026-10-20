@@ -12,6 +12,9 @@ module.exports = {
     },
     watchman: false,
     testEnvironment: 'jsdom',
+    testEnvironmentOptions: {
+        customExportConditions: ['browser', 'development'],
+    },
     verbose: false,
     collectCoverage: true,
     coverageDirectory: 'coverage',
