@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { readdirSync, readFileSync } from 'node:fs';
@@ -8,6 +8,7 @@ const documentation = createRequire(import.meta.url)(
     '../../scripts/documentation-pages.cjs'
 );
 const directory = fileURLToPath(new URL('.', import.meta.url));
+let googleAnalyticsId;
 
 export default defineConfig({
     resolve: {
@@ -27,6 +28,43 @@ export default defineConfig({
         ],
     },
     plugins: [
+        {
+            name: 'google-analytics',
+            configResolved(config) {
+                googleAnalyticsId = loadEnv(
+                    config.mode,
+                    config.envDir,
+                    'PUBLIC_'
+                ).PUBLIC_GOOGLE_ANALYTICS_ID;
+            },
+            transformIndexHtml(html, context) {
+                if (
+                    !googleAnalyticsId ||
+                    context.filename !== resolve(directory, 'index.html')
+                )
+                    return html;
+                return [
+                    {
+                        tag: 'script',
+                        attrs: {
+                            async: true,
+                            src: `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
+                        },
+                        injectTo: 'head',
+                    },
+                    {
+                        tag: 'script',
+                        children: `window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', ${JSON.stringify(googleAnalyticsId).replace(/</g, '\\u003c')});`,
+                        injectTo: 'head',
+                    },
+                ];
+            },
+        },
         {
             name: 'example-playground-sources',
             resolveId(id) {
