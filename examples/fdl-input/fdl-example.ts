@@ -47,11 +47,18 @@ export class FdlExample extends LitElement {
         this.drafts[filename] ??= this.sourceFor(filename);
         this.editing = filename;
         this.editError = '';
-        this.updateComplete.then(() =>
-            this.shadowRoot
-                ?.querySelector<HTMLTextAreaElement>(`textarea`)
-                ?.focus()
-        );
+        this.updateComplete.then(() => {
+            const editor =
+                this.shadowRoot?.querySelector<HTMLTextAreaElement>(
+                    '.code-editor'
+                );
+            if (!editor) return;
+            // Assigning the source value leaves the caret at the end of the file.
+            editor.setSelectionRange(0, 0);
+            editor.focus({ preventScroll: true });
+            editor.scrollTop = 0;
+            editor.scrollLeft = 0;
+        });
     }
 
     private cancelEditing() {

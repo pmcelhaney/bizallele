@@ -112,6 +112,28 @@ function previewMessage(iframe: HTMLIFrameElement, type: string, extra: object =
     );
 }
 
+it('opens edit mode with focus and the caret at the start of the file', async () => {
+    const frame = await editableExample();
+    const root = frame.shadowRoot!;
+    const editor = root.querySelector('textarea')!;
+    expect(editor.value).toBe(frame.sources['model.ts']);
+    expect(root.activeElement).toBe(editor);
+    expect(editor.selectionStart).toBe(0);
+    expect(editor.selectionEnd).toBe(0);
+
+    root.querySelectorAll<HTMLButtonElement>('.edit-toolbar button')[1].click();
+    await frame.updateComplete;
+    root.querySelector<HTMLButtonElement>('#example-tab-2')!.click();
+    await frame.updateComplete;
+    root.querySelector<HTMLButtonElement>('#example-panel-2 .edit-toolbar button')!.click();
+    await frame.updateComplete;
+    const nextEditor = root.querySelector('textarea')!;
+    expect(nextEditor.value).toBe(frame.sources['view.ts']);
+    expect(root.activeElement).toBe(nextEditor);
+    expect(nextEditor.selectionStart).toBe(0);
+    expect(nextEditor.selectionEnd).toBe(0);
+});
+
 it('cancels a draft without changing the displayed source or live example', async () => {
     const frame = await editableExample();
     const textarea = frame.shadowRoot!.querySelector('textarea')!;
