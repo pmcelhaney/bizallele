@@ -48,9 +48,10 @@ export class FdlExample extends LitElement {
         this.editing = filename;
         this.editError = '';
         this.updateComplete.then(() => {
-            const editor = this.shadowRoot?.querySelector<HTMLTextAreaElement>(
-                '.code-editor'
-            );
+            const editor =
+                this.shadowRoot?.querySelector<HTMLTextAreaElement>(
+                    '.code-editor'
+                );
             if (!editor) return;
             // Assigning the source value leaves the caret at the end of the file.
             editor.setSelectionRange(0, 0);

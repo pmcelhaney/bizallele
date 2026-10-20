@@ -81,8 +81,16 @@ rendering. The npm package is `@pmcelhaney/bizallele`.
 - Before starting work, check `git status --short --branch`. Identify ownership
   of existing changes and preserve unrelated work; never revert, stash, stage,
   or commit another task's changes.
-- After each coherent batch, run relevant verification, inspect status and the
-  diff, then stage and commit only files belonging to the current task.
+- Before every commit, run `npm run format:check`,
+  `npm test -- --runInBand`, `npm run typecheck`, and `npm run docs:build`
+  against the final working-tree contents. Wait for every check to finish
+  successfully before committing, including for documentation-only changes.
+  If a check fails or cannot run, fix the cause and rerun it; do not commit
+  while any required check is failing, blocked, or still running.
+- After verification, inspect `git status --short --branch` and the diff,
+  stage only files belonging to the current task, and run
+  `git diff --cached --check` before committing. If files change after checks
+  pass, rerun the required checks before committing.
 - Use a concise, imperative commit message. Before reporting completion, check
   status again and report any remaining changes explicitly.
 - Keep commits local unless the user explicitly requests a push or deployment.
