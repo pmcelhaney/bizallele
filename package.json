@@ -76,7 +76,7 @@
         "babel-jest": "^30.5.2",
         "esbuild": "^0.28.2",
         "jest": "^30.5.2",
-        "jest-environment-jsdom": "^29.7.0",
+        "jest-environment-jsdom": "^30.5.2",
         "markdown-it": "^15.0.3",
         "prettier": "^3.9.10",
         "regenerator-runtime": "^0.14.1",
