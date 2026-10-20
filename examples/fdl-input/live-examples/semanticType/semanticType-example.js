@@ -2,7 +2,7 @@ import { semanticTypeView as renderExample } from './semanticType-view.js';
 import { ExampleModel } from './semanticType-example-state.js';
 import { html } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
-import '@pmcelhaney/bizallele/lit/fdl-address';
+import 'bizallele/lit/fdl-address';
 import '../../fdl-record-inspector';
 export class ExampleView extends ExampleModel {
     createRenderRoot() {

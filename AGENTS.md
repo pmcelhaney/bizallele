@@ -5,7 +5,7 @@
 Bizallele is a JavaScript/TypeScript library for modeling
 complex forms and tables. It defines field types, validation, dependencies,
 records, and recordsets declaratively so UI components can concentrate on
-rendering. The npm package is `@pmcelhaney/bizallele`.
+rendering. The npm package is `bizallele`.
 
 ## Layout
 

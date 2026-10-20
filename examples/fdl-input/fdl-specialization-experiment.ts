@@ -1,10 +1,10 @@
 import { createSpecializations } from './specialization-model';
 import { specializationView } from './specialization-view';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import { exampleTheme } from './example-theme';
 import { LitElement, css, html } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 export class FdlSpecializationExperiment extends LitElement {
     private model = createSpecializations();

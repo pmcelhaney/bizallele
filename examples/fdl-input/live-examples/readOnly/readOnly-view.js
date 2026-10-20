@@ -1,6 +1,6 @@
 import { record } from './readOnly-model.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 export function readOnlyView() {
     return html`
         <fdl-field .record=${record} field="fixedOwner"></fdl-field>

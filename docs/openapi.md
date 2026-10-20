@@ -8,8 +8,8 @@ are needed.
 ## Quickstart
 
 ```javascript
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromOpenAPI } from '@pmcelhaney/bizallele/openapi';
+import { Record } from 'bizallele';
+import { fieldsFromOpenAPI } from 'bizallele/openapi';
 
 const document = `
 openapi: 3.1.0
@@ -87,8 +87,8 @@ and its complete contents are validated. The adapter does not flatten nested
 properties into dotted field names or automatically build nested controls.
 
 ```javascript
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromOpenAPI } from '@pmcelhaney/bizallele/openapi';
+import { Record } from 'bizallele';
+import { fieldsFromOpenAPI } from 'bizallele/openapi';
 
 const document = {
     openapi: '3.1.0',

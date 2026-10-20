@@ -1,6 +1,6 @@
 import { recordset } from './rowClass-model.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-table';
 export function rowClassView() {
     return html`<fdl-table .recordset=${recordset}
         ><fdl-column field="status"></fdl-column

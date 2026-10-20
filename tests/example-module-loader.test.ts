@@ -3,12 +3,12 @@ import { field, Record as BizalleleRecord } from '../src';
 
 it('runs saved TypeScript model and view files against the same fresh model', () => {
     const original = {
-        './model.ts': `import { field, Record } from '@pmcelhaney/bizallele';
+        './model.ts': `import { field, Record } from 'bizallele';
             export const person = new Record({ name: field.label('Original') }, { name: 'Ada' });`,
         './view.ts': `import { person } from './model';
             export function label(): string { return person.field('name').label; }`,
     };
-    const external = { '@pmcelhaney/bizallele': { field, Record: BizalleleRecord } };
+    const external = { bizallele: { field, Record: BizalleleRecord } };
     const first = createExampleLoader(original, external);
     expect(first('./view.ts').label()).toBe('Original');
     const edited = createExampleLoader(

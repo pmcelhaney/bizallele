@@ -1,4 +1,4 @@
-import { field, Record, Recordset } from '@pmcelhaney/bizallele';
+import { field, Record, Recordset } from 'bizallele';
 import {
     weeklyExpenses,
     expenseHighlightThreshold,

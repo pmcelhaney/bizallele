@@ -13,15 +13,15 @@ export default defineConfig({
     resolve: {
         alias: [
             {
-                find: /^@pmcelhaney\/bizallele\/lit$/,
+                find: /^bizallele\/lit$/,
                 replacement: resolve(directory, '../../src/lit/index.ts'),
             },
             {
-                find: /^@pmcelhaney\/bizallele$/,
+                find: /^bizallele$/,
                 replacement: resolve(directory, '../../src/index.js'),
             },
             {
-                find: '@pmcelhaney/bizallele',
+                find: 'bizallele',
                 replacement: resolve(directory, '../../src'),
             },
         ],

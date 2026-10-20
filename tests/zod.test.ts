@@ -1,7 +1,7 @@
 import * as z from 'zod/v4';
 import * as mini from 'zod/v4/mini';
-import { Record, Recordset } from '@pmcelhaney/bizallele';
-import { fieldsFromZod } from '@pmcelhaney/bizallele/zod';
+import { Record, Recordset } from 'bizallele';
+import { fieldsFromZod } from 'bizallele/zod';
 
 const schema = z.object({
     name: z.string().min(1),

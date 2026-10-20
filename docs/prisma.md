@@ -9,8 +9,8 @@ generator, or environment variables.
 ## Quickstart
 
 ```javascript
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromPrisma } from '@pmcelhaney/bizallele/prisma';
+import { Record } from 'bizallele';
+import { fieldsFromPrisma } from 'bizallele/prisma';
 
 const schema = `
 model Product {
@@ -48,7 +48,7 @@ product.isValid('stock', 1.5); // false: Int requires a whole number
 The schema remains text until the adapter parses it. You can provide it from a
 file read on the server or a build tool's raw-text import. The function itself
 does not read files. Importing Bizallele's main entry point does not load the schema
-parser; import this integration explicitly from `@pmcelhaney/bizallele/prisma`.
+parser; import this integration explicitly from `bizallele/prisma`.
 
 ## Arguments and result
 
@@ -56,7 +56,7 @@ parser; import this integration explicitly from `@pmcelhaney/bizallele/prisma`.
 fieldsFromPrisma(schema: string, selection: PrismaFieldSelection)
 ```
 
-`PrismaFieldSelection` is exported from `@pmcelhaney/bizallele/prisma` and contains:
+`PrismaFieldSelection` is exported from `bizallele/prisma` and contains:
 
 | Property                    | Meaning                                                                                |
 | --------------------------- | -------------------------------------------------------------------------------------- |

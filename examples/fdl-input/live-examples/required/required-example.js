@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
-import { field } from '@pmcelhaney/bizallele';
+import { field } from 'bizallele';
 import { ExampleController } from '../../example-controller';
 import { person } from './required-model.js';
 import { requiredView } from './required-view.js';

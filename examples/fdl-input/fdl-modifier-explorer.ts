@@ -19,7 +19,7 @@ import { exampleTheme } from './example-theme';
 import { highlightJavaScript } from './highlight-javascript';
 import './fdl-record-inspector';
 import { keyed } from 'lit/directives/keyed.js';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 import './fdl-modifier-catalog';
 import {
     additionalRecipes,
@@ -831,7 +831,7 @@ export class FdlModifierExplorer extends LitElement {
                 </div>
                 <div class="footer-install">
                     <p>Install with npm (publication pending)</p>
-                    <code>npm install @pmcelhaney/bizallele</code>
+                    <code>npm install bizallele</code>
                 </div>
             </footer>
             ${

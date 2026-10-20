@@ -1,4 +1,4 @@
-import { field, Record, Recordset } from '@pmcelhaney/bizallele';
+import { field, Record, Recordset } from 'bizallele';
 const currency = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

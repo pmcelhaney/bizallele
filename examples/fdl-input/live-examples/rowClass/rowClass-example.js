@@ -1,7 +1,7 @@
 import { rowClassView as renderExample } from './rowClass-view.js';
 import { ExampleModel } from './rowClass-example-state.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-table';
 import '../../fdl-recordset-inspector';
 export class ExampleView extends ExampleModel {
     createRenderRoot() {

@@ -1,4 +1,4 @@
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 const record = new Record(
     {

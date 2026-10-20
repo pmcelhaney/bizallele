@@ -39,7 +39,7 @@ export const sitePages = [
 ] as const;
 export type SitePage = (typeof sitePages)[number]['id'];
 
-const definition = `import { field, Record } from '@pmcelhaney/bizallele';
+const definition = `import { field, Record } from 'bizallele';
 
 const fields = {
     name: field.label('Name').required(),

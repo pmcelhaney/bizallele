@@ -1,4 +1,4 @@
-import { field, Recordset } from '@pmcelhaney/bizallele';
+import { field, Recordset } from 'bizallele';
 export const recordset = new Recordset(
     {
         status: field

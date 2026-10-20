@@ -3,8 +3,8 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { exampleSource } from '../examples/fdl-input/modifier-example-source';
 import { explorerRecipes } from '../examples/fdl-input/fdl-modifier-explorer';
-import { FdlTable } from '@pmcelhaney/bizallele/lit/fdl-table';
-import { FdlField } from '@pmcelhaney/bizallele/lit/fdl-field';
+import { FdlTable } from 'bizallele/lit/fdl-table';
+import { FdlField } from 'bizallele/lit/fdl-field';
 
 it.each(explorerRecipes.map(recipe => recipe.name))(
     'shows the exact executable model and view files for .%s()',

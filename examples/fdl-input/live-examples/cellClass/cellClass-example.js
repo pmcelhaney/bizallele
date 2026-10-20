@@ -1,8 +1,8 @@
 import { cellClassView as renderExample } from './cellClass-view.js';
 import { ExampleModel } from './cellClass-example-state.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-table';
 import '../../fdl-recordset-inspector';
 export class ExampleView extends ExampleModel {
     createRenderRoot() {

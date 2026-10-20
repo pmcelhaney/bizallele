@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { Record, string } from '@pmcelhaney/bizallele';
-import { fieldsFromPrisma, PrismaFieldSelection } from '@pmcelhaney/bizallele/prisma';
+import { Record, string } from 'bizallele';
+import { fieldsFromPrisma, PrismaFieldSelection } from 'bizallele/prisma';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 

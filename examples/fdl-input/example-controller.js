@@ -1,5 +1,5 @@
 import { LitElement } from 'lit';
-import { Record, Recordset } from '@pmcelhaney/bizallele';
+import { Record, Recordset } from 'bizallele';
 
 const initialFieldTypes = new WeakMap();
 

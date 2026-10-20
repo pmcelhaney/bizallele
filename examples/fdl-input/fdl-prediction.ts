@@ -1,5 +1,5 @@
-import '@pmcelhaney/bizallele/lit/fdl-record';
-import { field, Record } from '@pmcelhaney/bizallele';
+import 'bizallele/lit/fdl-record';
+import { field, Record } from 'bizallele';
 import { LitElement, css, html } from 'lit';
 import {
     addressCases,
@@ -9,7 +9,7 @@ import {
     type CompositionRules,
 } from './composition-model';
 import { exampleTheme } from './example-theme';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 const choice = (label: string, options: { text: string; value: string }[]) =>
     field.label(label).options(options);

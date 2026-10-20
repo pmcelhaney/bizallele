@@ -13,7 +13,7 @@ handlers makes them difficult to reuse and maintain. With Bizallele, define the
 rules alongside each field type; the view only decides where to render fields.
 
 ```js
-import { string, boolean, date, Record } from '@pmcelhaney/bizallele';
+import { string, boolean, date, Record } from 'bizallele';
 
 const existingCustomers = ['Ada', 'Grace'];
 const holidays = [new Date(2026, 11, 25).toDateString()];

@@ -22,7 +22,7 @@ export function renderEditableRecordset() {
         <fdl-code-snippet>
             <pre
                 class="code"
-            ><code>${highlightJavaScript(`import { field, Recordset } from '@pmcelhaney/bizallele';
+            ><code>${highlightJavaScript(`import { field, Recordset } from 'bizallele';
 const shipmentFields = {
     id: field.label('Shipment').readOnly(),
     quantity: field

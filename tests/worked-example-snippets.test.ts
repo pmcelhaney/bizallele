@@ -12,7 +12,7 @@ it('runs the displayed shipment setup and aggregation snippets together', async 
         const code = Array.from(container.querySelectorAll('pre code'))
             .map(block => block.textContent)
             .join('\n')
-            .replace("import { field, Recordset } from '@pmcelhaney/bizallele';", '');
+            .replace("import { field, Recordset } from 'bizallele';", '');
         const run = new Function(
             'field',
             'Recordset',
@@ -46,7 +46,7 @@ it('runs the displayed tax-ID tests against the displayed model exports', async 
         const modelSource = frame.shadowRoot!.querySelector('pre code')!.textContent!;
         const model: { [name: string]: any } = {};
         new Function('require', 'exports', compile(modelSource))((name: string) => {
-            if (name === '@pmcelhaney/bizallele') return { field, Record };
+            if (name === 'bizallele') return { field, Record };
             throw new Error(`Unexpected model dependency: ${name}`);
         }, model);
         const cases: (() => void)[] = [];

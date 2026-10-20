@@ -1,8 +1,8 @@
 /// <reference types="node" />
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromOpenAPI } from '@pmcelhaney/bizallele/openapi';
+import { Record } from 'bizallele';
+import { fieldsFromOpenAPI } from 'bizallele/openapi';
 
 function recordFor(schema: any, value: any, options: any = {}) {
     return new Record(

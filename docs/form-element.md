@@ -11,9 +11,9 @@
 Import a module to register its custom element:
 
 ```ts
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-record';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-table';
 ```
 
 `fdl-field` binds a `Record` and field name to a labelled native control.
@@ -22,9 +22,9 @@ registers both `fdl-table` and its declarative `fdl-column` children.
 
 ```ts
 import { html } from 'lit';
-import { field, Record } from '@pmcelhaney/bizallele';
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-record';
+import { field, Record } from 'bizallele';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-record';
 
 const account = new Record({ name: field.label('Name').required() }, { name: '' });
 const view = html`<fdl-record .record=${account}>
@@ -55,15 +55,15 @@ Custom record consumers can extend `RecordElement`, which exposes the same
 reactive `record` property and inheritance lifecycle. Custom field controls
 already inherit that behavior through `FormElement`.
 
-Import `@pmcelhaney/bizallele/lit` to register all packaged elements and access the
+Import `bizallele/lit` to register all packaged elements and access the
 `FdlRecord`, `RecordElement`, `FdlField`, `FdlAddress`, `FdlTable`, `FdlColumn`,
 and `FormElement` classes.
 These modules require a browser DOM. Core model imports remain independent
 of Lit element registration.
 
 The components include default CSS. For a custom element with different styles,
-extend `FormElement` from `@pmcelhaney/bizallele/lit/form-element` and register your
-own tag. The existing `@pmcelhaney/bizallele/form-element` path remains available.
+extend `FormElement` from `bizallele/lit/form-element` and register your
+own tag. The existing `bizallele/form-element` path remains available.
 
 ## Table pagination
 
@@ -74,8 +74,8 @@ Rows per page selector. The controls use `Recordset.pageNumber`, `pageSize`, and
 No separate pagination configuration is needed on the element.
 
 ```ts
-import { field, Recordset } from '@pmcelhaney/bizallele';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import { field, Recordset } from 'bizallele';
+import 'bizallele/lit/fdl-table';
 
 const orders = new Recordset({ name: field.label('Name') }, orderRows);
 orders.setInitialPageSize(25);
@@ -102,7 +102,7 @@ property to a function receiving the actual row `Record` to return Lit content,
 such as an editor, selection button, or calculated value:
 
 ```ts
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 const view = html`<fdl-table .recordset=${orders}>
     <fdl-column
@@ -163,7 +163,7 @@ field:
 
 ```ts
 import { css } from 'lit';
-import FormElement from '@pmcelhaney/bizallele/lit/form-element';
+import FormElement from 'bizallele/lit/form-element';
 
 export class FdlField extends FormElement {
     static get styles() {
@@ -186,7 +186,7 @@ Always use that component as the outer form control and pass the field name.
 Supply its record explicitly or through an enclosing `fdl-record`. Fields with options render as native selects:
 
 ```ts
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 
 const contactMethod = field.label('Preferred contact method').options([
     { text: 'Choose a method', value: '' },

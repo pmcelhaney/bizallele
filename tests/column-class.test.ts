@@ -1,7 +1,7 @@
 import FieldTypeBuilder from '../src/field-type-builder';
 import Record from '../src/record.js';
 import Recordset from '../src/recordset.js';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-table';
 
 type TestTable = HTMLElement & {
     recordset: Recordset<any>;

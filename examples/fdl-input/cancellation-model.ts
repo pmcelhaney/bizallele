@@ -6,7 +6,7 @@ export {
     cancellationFields,
     type CancellationRules,
 } from './cancellation-rules';
-import { Record } from '@pmcelhaney/bizallele';
+import { Record } from 'bizallele';
 export const cancellationCases = [
     {
         status: 'active',

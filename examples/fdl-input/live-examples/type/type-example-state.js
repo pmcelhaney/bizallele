@@ -1,7 +1,7 @@
 import { record, inputTypeField } from './type-model.js';
 // Tutorial state for the .type() example.
 import { ExampleController } from '../../example-controller';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import {
     inputTypeChoices,
     inputTypeInitialValue,

@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { Record } from '@pmcelhaney/bizallele';
-import { fieldsFromOpenAPI, OpenAPIFieldSelection } from '@pmcelhaney/bizallele/openapi';
+import { Record } from 'bizallele';
+import { fieldsFromOpenAPI, OpenAPIFieldSelection } from 'bizallele/openapi';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 

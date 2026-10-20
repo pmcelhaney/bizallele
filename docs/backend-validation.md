@@ -2,7 +2,7 @@
 
 Bizallele field definitions can validate API requests, imports, and background jobs
 without rendering a form. Share domain rules between the browser and server,
-then validate again on the server before saving. Import from `@pmcelhaney/bizallele`;
+then validate again on the server before saving. Import from `bizallele`;
 no Lit elements or browser controls are needed for this flow.
 
 ## Define reusable rules
@@ -12,7 +12,7 @@ the US. The custom validators also check runtime types: the `string` and
 `number` primitives do not by themselves enforce JSON types or coerce input.
 
 ```js
-import { Record, string } from '@pmcelhaney/bizallele';
+import { Record, string } from 'bizallele';
 
 export const accountFields = {
     country: string.required().validator({
@@ -133,7 +133,7 @@ invalid. A thrown error or rejected promise propagates to the caller; handle
 service failures separately from a negative validation result.
 
 ```js
-import { Record, string } from '@pmcelhaney/bizallele';
+import { Record, string } from 'bizallele';
 
 export async function validateUsername(username, isAvailable) {
     const fields = {

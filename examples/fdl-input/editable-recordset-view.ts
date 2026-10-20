@@ -1,9 +1,9 @@
 import { html } from 'lit';
-import type { Record } from '@pmcelhaney/bizallele';
+import type { Record } from 'bizallele';
 import { createShipments, shipmentCharge } from './editable-recordset-model';
-import '@pmcelhaney/bizallele/lit/fdl-field';
-import '@pmcelhaney/bizallele/lit/fdl-record';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-table';
 export function editableRecordsetView(
     shipments: ReturnType<typeof createShipments>,
     selected: Record<any> | undefined,

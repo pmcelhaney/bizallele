@@ -11,8 +11,8 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@pmcelhaney/bizallele": ["src/index"],
-            "@pmcelhaney/bizallele/*": ["src/*"]
+            "bizallele": ["src/index"],
+            "bizallele/*": ["src/*"]
         },
         "target": "es2020",
         "module": "commonjs",

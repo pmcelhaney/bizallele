@@ -1,6 +1,6 @@
 import { person } from './required-model.js';
 import { html } from 'lit';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 export function requiredView() {
     return html`

@@ -1,9 +1,9 @@
-import '@pmcelhaney/bizallele/lit/fdl-record';
+import 'bizallele/lit/fdl-record';
 import modelSource from './cancellation-rules.ts?raw';
 import viewSource from './cancellation-view.ts?raw';
 import { cancellationView } from './cancellation-view';
 import './fdl-code-snippet';
-import { field, Record } from '@pmcelhaney/bizallele';
+import { field, Record } from 'bizallele';
 import { LitElement, css, html } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import {
@@ -14,7 +14,7 @@ import {
 } from './cancellation-model';
 import { highlightJavaScript } from './highlight-javascript';
 import { exampleTheme } from './example-theme';
-import '@pmcelhaney/bizallele/lit/fdl-field';
+import 'bizallele/lit/fdl-field';
 
 export class FdlTransferChallenge extends LitElement {
     private configuration = new Record(

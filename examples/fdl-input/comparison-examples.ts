@@ -1,4 +1,4 @@
-import { field, Recordset } from '@pmcelhaney/bizallele';
+import { field, Recordset } from 'bizallele';
 import { html } from 'lit';
 
 export const prefixFilter = field.filter((text, value) =>

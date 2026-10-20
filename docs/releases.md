@@ -1,6 +1,6 @@
 # Releases and versioning
 
-Bizallele uses Semantic Versioning for the `@pmcelhaney/bizallele` package. This document
+Bizallele uses Semantic Versioning for the `bizallele` package. This document
 defines the release discipline being established during the repository’s
 portfolio rehabilitation; it does not claim that automated publication is
 configured today.

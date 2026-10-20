@@ -2,7 +2,7 @@ import { compareFunctionView as renderExample } from './compareFunction-view.js'
 import { ExampleModel } from './compareFunction-example-state.js';
 import { html } from 'lit';
 import { sortCases } from '../../comparison-examples';
-import '@pmcelhaney/bizallele/lit/fdl-table';
+import 'bizallele/lit/fdl-table';
 import '../../fdl-recordset-inspector';
 export class ExampleView extends ExampleModel {
     createRenderRoot() {
