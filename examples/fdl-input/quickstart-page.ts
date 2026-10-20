@@ -109,7 +109,7 @@ npm install --save-dev vite@5.4.21 typescript@4.6.4</code></pre>
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "skipLibCheck": true,
     "types": [],

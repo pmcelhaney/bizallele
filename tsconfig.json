@@ -9,14 +9,13 @@
         "**/coverage"
     ],
     "compilerOptions": {
-        "baseUrl": ".",
         "paths": {
-            "bizallele": ["src/index"],
-            "bizallele/*": ["src/*"]
+            "bizallele": ["./src/index"],
+            "bizallele/*": ["./src/*"]
         },
         "target": "es2020",
         "module": "commonjs",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "allowJs": true,
         "checkJs": false,
         "declaration": false,
