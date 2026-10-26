@@ -862,3 +862,100 @@ it('requests server pages and disables controls until the response arrives', asy
     expect(paginationButton(table, 'Next').disabled).toBe(false);
     table.remove();
 });
+
+class TestFieldCell extends HTMLElement {
+    private boundField?: import('../src/index').Field;
+    connectedField?: import('../src/index').Field;
+    private refresh = () => {
+        this.textContent = String(this.boundField?.rawValue);
+    };
+    get field() {
+        return this.boundField!;
+    }
+    set field(field: import('../src/index').Field) {
+        this.boundField?.record.removeEventListener('change', this.refresh);
+        this.boundField = field;
+        if (this.isConnected) field.record.addEventListener('change', this.refresh);
+        this.refresh();
+    }
+    connectedCallback() {
+        this.connectedField = this.field;
+        this.boundField?.record.addEventListener('change', this.refresh);
+    }
+    disconnectedCallback() {
+        this.boundField?.record.removeEventListener('change', this.refresh);
+    }
+}
+customElements.define('test-field-cell', TestFieldCell);
+
+it('binds distinct child instances before connection and preserves them through edits and sorting', async () => {
+    const recordset = new Recordset({ amount: new FieldTypeBuilder<number>() }, [
+        { amount: 2 },
+        { amount: 1 },
+    ]);
+    const table = document.createElement('fdl-table') as TestTable;
+    table.recordset = recordset;
+    table.innerHTML =
+        '<fdl-column field="amount"><test-field-cell title="Amount"></test-field-cell></fdl-column>';
+    document.body.append(table);
+    try {
+        await settle(table);
+        const cells = () =>
+            Array.from(table.shadowRoot!.querySelectorAll<TestFieldCell>('tbody test-field-cell'));
+        const [first, second] = cells();
+        expect(first).not.toBe(second);
+        expect(first).not.toBe(table.querySelector('test-field-cell'));
+        expect(first.field).toBe(recordset.currentPage[0].field('amount'));
+        expect(first.connectedField).toBe(first.field);
+        expect(first.title).toBe('Amount');
+        first.field.rawValue = 3;
+        await settle(table);
+        expect(cells()[0]).toBe(first);
+        expect(first.textContent).toBe('3');
+        await recordset.sort({ field: 'amount', sort: 'ascending' });
+        await recordset.requestImmediateUpdate();
+        await settle(table);
+        expect(cells()).toEqual([second, first]);
+        expect(first.field.rawValue).toBe(3);
+        expect(table.querySelector<TestFieldCell>('test-field-cell')!.field).toBeUndefined();
+    } finally {
+        table.remove();
+    }
+});
+
+it('updates child prototypes, switches fields and recordsets, and restores formatted templates', async () => {
+    const table = document.createElement('fdl-table') as TestTable;
+    const definition = {
+        amount: new FieldTypeBuilder<number>().template(value => `Amount: ${value}`),
+        other: new FieldTypeBuilder<string>(),
+    };
+    table.recordset = new Recordset(definition, [{ amount: 2, other: 'Other' }]);
+    table.innerHTML =
+        '<fdl-column field="amount"><test-field-cell title="Original"></test-field-cell></fdl-column>';
+    document.body.append(table);
+    try {
+        await settle(table);
+        const column = table.querySelector('fdl-column')!;
+        const child = () =>
+            table.shadowRoot!.querySelector<TestFieldCell>('tbody test-field-cell')!;
+        const original = child();
+        column.firstElementChild!.setAttribute('title', 'Changed');
+        await settle(table);
+        expect(child()).not.toBe(original);
+        expect(child().title).toBe('Changed');
+        column.setAttribute('field', 'other');
+        await settle(table);
+        expect(child().field).toBe(table.recordset.currentPage[0].field('other'));
+        expect(child().textContent).toBe('Other');
+        table.recordset = new Recordset(definition, [{ amount: 9, other: 'Replacement' }]);
+        await settle(table);
+        expect(child().textContent).toBe('Replacement');
+        column.setAttribute('field', 'amount');
+        column.replaceChildren();
+        await settle(table);
+        expect(child()).toBeNull();
+        expect(rows(table)).toEqual([['Amount: 9']]);
+    } finally {
+        table.remove();
+    }
+});

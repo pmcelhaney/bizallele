@@ -97,31 +97,72 @@ return `{ data, totalCount }`; see [Recordset](./recordset.md).
 
 ## Custom table cells
 
-By default, `fdl-column` displays `record.print(field)`. Set its `renderCell`
-property to a function receiving the actual row `Record` to return Lit content,
-such as an editor, selection button, or calculated value:
+By default, `fdl-column` displays `record.print(field)`, including the field's
+`.template()` modifier. To supply view-specific content, place one custom element
+inside the column:
 
-```ts
-import 'bizallele/lit/fdl-field';
-
-const view = html`<fdl-table .recordset=${orders}>
-    <fdl-column
-        field="name"
-        .renderCell=${record => html`<fdl-field .record=${record} field="name"></fdl-field>`}
-    ></fdl-column>
-</fdl-table>`;
+```html
+<fdl-table>
+    <fdl-column field="quantity">
+        <shipment-editor></shipment-editor>
+    </fdl-column>
+</fdl-table>
 ```
 
-The column's `field` must name a model field; it supplies default labels,
+The child is a prototype, not a live row. The table clones it separately for each
+row and assigns the row's bound Bizallele `Field` to the clone's **`.field`
+property before connecting it**. The prototype receives no field, so components
+must tolerate an unset field. The original stays hidden inside the column.
+
+A child can read `field.rawValue`, `field.value` (formatted output),
+`field.valid`, `field.record`, and `field.fieldName`. An editor can write
+`field.value` to parse input or `field.rawValue` to set a model value directly.
+For example, this component wraps the existing field editor:
+
+```ts
+import { LitElement, html } from 'lit';
+import type { Field } from 'bizallele';
+import 'bizallele/lit/fdl-field';
+
+class ShipmentEditor extends LitElement {
+    static properties = { field: { attribute: false } };
+    field?: Field;
+
+    render() {
+        if (!this.field) return html``;
+        return html`<fdl-field
+            .record=${this.field.record}
+            field=${this.field.fieldName}
+        ></fdl-field>`;
+    }
+}
+
+customElements.define('shipment-editor', ShipmentEditor);
+```
+
+Cloning preserves attributes and nested markup. JavaScript properties and event
+listeners assigned to the prototype are **not copied**. Configure prototypes with
+attributes; implement interactions in the child component and communicate outward
+using bubbling, composed custom events. `FdlCellElement`, exported from
+`bizallele/lit/fdl-table`, describes the bound child's property contract.
+
+Children own their accessible content and subscriptions. For reactive displays,
+subscribe to the bound Field's `change` event; subscribe to `field.record`'s
+`change` event when content also depends on other fields. Remove listeners on
+disconnect and when rebinding. The shipment example demonstrates this lifecycle.
+
+The column's `field` must name a model field and supplies its default label,
 alignment, classes, and sort/filter behavior. An explicit `label` overrides the
-heading. The renderer replaces only the cell content. It owns any controls and
-their accessible labels; the table owns table structure, sizing, and pagination.
-Rows retain their DOM identity when sorting moves the same Records, and record
-updates rerender custom cells. Assigning a new renderer updates the table;
-external state used by a renderer must trigger a table update or supply a new
-renderer. Omit the callback to restore formatted text. See
-[Edit a recordset](../examples/fdl-input/#editable-recordset) for shared table
-and detail editors, calculated charges, and validation messages.
+heading. The table owns cell structure, sizing, and pagination. Children retain
+their DOM identity when sorting moves the same Records or values change.
+Changing the prototype's attributes or markup replaces its row instances; removing
+it restores formatted output. Supply exactly one direct child element per column.
+
+See [Edit a recordset](../examples/fdl-input/#editable-recordset) for the complete
+shipment example: selection buttons, shared cell/detail editors, calculated
+charges, validation messages, and subscription cleanup. Existing `renderCell`
+callbacks must move into child components; the column callback property has been
+removed.
 
 ## Custom field elements
 

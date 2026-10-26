@@ -1,6 +1,7 @@
 import { LitElement, css, html, nothing } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
-import type { Record } from '../index';
+import { Directive, directive } from 'lit/directive.js';
+import type { Field, Record } from '../index';
 import { Recordset } from '../index';
 
 type SortDirection = 'ascending' | 'descending';
@@ -54,20 +55,30 @@ export function resizeColumnWidths(
     return next;
 }
 
+/** The child element receives the actual row-bound Field before connecting. */
+export interface FdlCellElement extends HTMLElement {
+    field: Field;
+}
+
+class ColumnChildDirective extends Directive {
+    private prototype?: Element;
+    private snapshot?: Node;
+    private instance?: FdlCellElement;
+
+    render(prototype: Element, field: Field) {
+        if (this.prototype !== prototype || !this.snapshot?.isEqualNode(prototype)) {
+            this.prototype = prototype;
+            this.snapshot = prototype.cloneNode(true);
+            this.instance = prototype.cloneNode(true) as FdlCellElement;
+        }
+        this.instance!.field = field;
+        return this.instance!;
+    }
+}
+
+const columnChild = directive(ColumnChildDirective);
+
 export class FdlColumn extends HTMLElement {
-    private cellRenderer?: (record: Record<any>) => unknown;
-
-    /** Optional Lit cell content; the table still owns cell semantics and styling. */
-    get renderCell() {
-        return this.cellRenderer;
-    }
-
-    set renderCell(renderer: ((record: Record<any>) => unknown) | undefined) {
-        if (this.cellRenderer === renderer) return;
-        this.cellRenderer = renderer;
-        this.closest<FdlTable>('fdl-table')?.requestUpdate();
-    }
-
     get field() {
         return this.getAttribute('field') ?? '';
     }
@@ -143,6 +154,7 @@ export class FdlTable extends LitElement {
         this.columnObserver.observe(this, {
             attributes: true,
             childList: true,
+            characterData: true,
             subtree: true,
         });
     }
@@ -711,11 +723,12 @@ export class FdlTable extends LitElement {
     private renderCell(record: Record<any>, column: FdlColumn, classes: string) {
         const value = record.getField(column.field);
         const field = record.field(column.field);
+        const prototype = column.firstElementChild;
         return html`<td
             class=${[classes, ...field.cellClasses(value)].filter(Boolean).join(' ')}
             style=${`text-align:${field.textAlign(value, 'table')}`}
         >
-            ${column.renderCell ? column.renderCell(record) : record.print(column.field)}
+            ${prototype ? columnChild(prototype, field) : record.print(column.field)}
         </td>`;
     }
 

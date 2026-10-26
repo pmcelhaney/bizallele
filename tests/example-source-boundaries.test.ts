@@ -33,9 +33,13 @@ for (const file of sourceFiles(resolve('examples/fdl-input'))) {
 it.each([...displayedFiles])('keeps displayed source free of tutorial components: %s', file => {
     const source = readFileSync(file, 'utf8');
     const parsed = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
-    const classes = parsed.statements.filter(ts.isClassDeclaration);
-    expect(classes.map(node => node.name?.text)).toEqual([]);
-    expect(source).not.toMatch(/customElements\.define|requestUpdate\(|connectedCallback\(/);
+    // Custom-cell examples teach the actual component contract, including lifecycle.
+    // Keep the surrounding tutorial shell out of the displayed source.
+    if (!file.endsWith('editable-recordset-cells.ts')) {
+        const classes = parsed.statements.filter(ts.isClassDeclaration);
+        expect(classes.map(node => node.name?.text)).toEqual([]);
+        expect(source).not.toMatch(/customElements\.define|requestUpdate\(|connectedCallback\(/);
+    }
     expect(source).not.toMatch(
         /<fdl-(?:example|record-inspector|recordset-inspector|prediction)\b/
     );
