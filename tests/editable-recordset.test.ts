@@ -1,6 +1,7 @@
 import '../examples/fdl-input/fdl-editable-recordset';
 import type { FdlEditableRecordset } from '../examples/fdl-input/fdl-editable-recordset';
 import type { FdlTable } from 'bizallele/lit/fdl-table';
+import type { LitElement } from 'lit';
 import type { FdlField } from 'bizallele/lit/fdl-field';
 import {
     createShipments,
@@ -41,12 +42,28 @@ it('keeps selected detail values, required state, and edits attached to the sele
         const table = demo.shadowRoot!.querySelector<FdlTable>('fdl-table');
         await table?.updateComplete;
         await Promise.all(
+            Array.from(
+                table?.shadowRoot?.querySelectorAll<LitElement>(
+                    'shipment-select, shipment-editor, shipment-charge, shipment-validation'
+                ) ?? []
+            ).map(cell => cell.updateComplete)
+        );
+        await Promise.all(
             [
                 ...Array.from(demo.shadowRoot!.querySelectorAll<FdlField>('fdl-field')),
-                ...Array.from(table?.shadowRoot?.querySelectorAll<FdlField>('fdl-field') ?? []),
+                ...cellEditors(),
             ].map(field => field.updateComplete)
         );
     };
+    function cellEditors() {
+        return Array.from(
+            demo.shadowRoot
+                ?.querySelector('fdl-table')
+                ?.shadowRoot?.querySelectorAll('shipment-editor') ?? []
+        ).flatMap(cell =>
+            Array.from(cell.shadowRoot?.querySelectorAll<FdlField>('fdl-field') ?? [])
+        );
+    }
     const detail = (name: string) =>
         Array.from(demo.shadowRoot!.querySelectorAll<FdlField>(`fdl-field[field="${name}"]`))
             .find(field => field.parentElement?.localName === 'fdl-record')!
@@ -55,8 +72,9 @@ it('keeps selected detail values, required state, and edits attached to the sele
         Array.from(
             demo
                 .shadowRoot!.querySelector('fdl-table')!
-                .shadowRoot!.querySelectorAll<HTMLButtonElement>('tbody button')
+                .shadowRoot!.querySelectorAll('tbody shipment-select')
         )
+            .map(cell => cell.shadowRoot!.querySelector<HTMLButtonElement>('button')!)
             .find(button => button.textContent === id)!
             .click();
         await settle();
@@ -76,9 +94,8 @@ it('keeps selected detail values, required state, and edits attached to the sele
         await edit(detail('quantity'), '7');
         expect(demo.shipments.allRecords[1].getField('quantity')).toBe(7);
         expect(demo.shipments.allRecords[0].getField('quantity')).toBe(2);
-        const rowQuantity = demo
-            .shadowRoot!.querySelector('fdl-table')!
-            .shadowRoot!.querySelectorAll<FdlField>('tbody fdl-field[field="quantity"]')[1]
+        const rowQuantity = cellEditors()
+            .filter(editor => editor.field === 'quantity')[1]
             .shadowRoot!.querySelector<HTMLInputElement>('input')!;
         expect(rowQuantity.value).toBe('7');
         await edit(rowQuantity, '9');
@@ -96,22 +113,22 @@ it('keeps selected detail values, required state, and edits attached to the sele
         expect(detail('reason').required).toBe(true);
         const table = demo.shadowRoot!.querySelector<FdlTable>('fdl-table')!;
         const selectedRow = demo.shipments.allRecords[1];
-        const selectedEditor = table.shadowRoot!.querySelectorAll<FdlField>(
-            'fdl-field[field="quantity"]'
-        )[1];
+        const selectedEditor = cellEditors().filter(editor => editor.field === 'quantity')[1];
         expect(table.recordset).toBe(demo.shipments);
         expect(table.shadowRoot!.querySelector('thead button')).toBeNull();
         expect(selectedEditor.record).toBe(selectedRow);
         await applyShipmentView(demo.shipments, '', true);
         await settle();
-        expect(table.shadowRoot!.querySelector<FdlField>('fdl-field[field="quantity"]')).toBe(
-            selectedEditor
-        );
+        expect(cellEditors().find(editor => editor.field === 'quantity')).toBe(selectedEditor);
         expect(detail('quantity').value).toBe('9');
         selectedRow.setField('reason', '');
         await settle();
-        expect(table.shadowRoot!.querySelector('tbody tr')!.textContent).toContain('Hold reason');
-        expect(table.shadowRoot!.querySelector('tbody tr')!.textContent).toContain('180.00');
+        expect(
+            table.shadowRoot!.querySelector('tbody shipment-validation')!.shadowRoot!.textContent
+        ).toContain('Hold reason');
+        expect(
+            table.shadowRoot!.querySelector('tbody shipment-charge')!.shadowRoot!.textContent
+        ).toContain('180.00');
         await applyShipmentView(demo.shipments, 'ready', false);
         await settle();
         expect(table.shadowRoot!.querySelectorAll('tbody tr')).toHaveLength(2);

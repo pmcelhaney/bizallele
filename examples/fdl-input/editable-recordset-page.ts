@@ -2,6 +2,7 @@ import './fdl-code-snippet';
 import './fdl-example';
 import modelSource from './editable-recordset-model.ts?raw';
 import viewSource from './editable-recordset-view.ts?raw';
+import cellsSource from './editable-recordset-cells.ts?raw';
 import { html } from 'lit';
 import { highlightJavaScript } from './highlight-javascript';
 import './fdl-editable-recordset';
@@ -14,10 +15,19 @@ export function renderEditableRecordset() {
         >
         <fdl-example
             heading="Edit a recordset"
-            .filenames=${['editable-recordset-model.ts', 'editable-recordset-view.ts']}
-            .sources=${{ 'editable-recordset-model.ts': modelSource, 'editable-recordset-view.ts': viewSource }}
+            .filenames=${['editable-recordset-model.ts', 'editable-recordset-view.ts', 'editable-recordset-cells.ts']}
+            .sources=${{ 'editable-recordset-model.ts': modelSource, 'editable-recordset-view.ts': viewSource, 'editable-recordset-cells.ts': cellsSource }}
             ><fdl-editable-recordset></fdl-editable-recordset
         ></fdl-example>
+        <h2>Declare child elements for custom cells</h2>
+        <p
+            >Each column contains a custom element used as a prototype. The
+            table creates one instance per row and assigns its
+            <code>.field</code> property. The Cells source tab includes the
+            child components and their subscription cleanup. Select a shipment,
+            edit its quantity, and watch its calculated charge and validation
+            update.</p
+        >
         <h2>Load once, edit the loaded Records</h2>
         <fdl-code-snippet>
             <pre
@@ -106,11 +116,12 @@ const visibleUnits = sumColumn.aggregate(
         <p
             >Bizallele supplies row state and view operations. The shared
             <code>fdl-table</code> owns table markup, column sizing, and
-            pagination; <code>fdl-column</code> cell renderers supply selection
-            buttons, <code>fdl-field</code> editors, calculated charges, and
-            validation. Use Tab to move between controls. It supplies no
-            spreadsheet arrow-key navigation, persistence, permissions, or
-            conflict resolution.</p
+            pagination; child elements inside <code>fdl-column</code> receive a
+            bound <code>Field</code> and supply selection buttons,
+            <code>fdl-field</code> editors, calculated charges, and validation.
+            Use Tab to move between controls. It supplies no spreadsheet
+            arrow-key navigation, persistence, permissions, or conflict
+            resolution.</p
         >
         <p
             >Complete implementation:

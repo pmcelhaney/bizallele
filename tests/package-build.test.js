@@ -86,6 +86,10 @@ const zodFields = fieldsFromZod(z.object({ stock: z.number().int().nonnegative()
 const zodRecord = new Record(zodFields, { stock: 12 });
 if (!zodRecord.isValid() || zodRecord.isValid('stock', -1)) throw new Error('Zod adapter validation failed');
 import { FdlField, FdlAddress, FdlTable, FdlColumn, FormElement } from 'bizallele/lit';
+import type { FdlCellElement } from 'bizallele/lit';
+class StockCell extends HTMLElement implements FdlCellElement {
+    field!: import('bizallele').Field;
+}
 import 'bizallele/lit/fdl-field';
 import 'bizallele/lit/fdl-address';
 import 'bizallele/lit/fdl-table';
