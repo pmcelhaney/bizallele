@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "prepare-code-self-review": {
+      "source": "pmcelhaney/engineering-skills",
+      "sourceType": "github",
+      "skillPath": "skills/prepare-code-self-review/SKILL.md",
+      "computedHash": "43955ec4f338492ebfbadee3e6cfdf0454d76eaf9e3659405bf34d72fd255887"
+    },
+    "repository-learning": {
+      "source": "pmcelhaney/engineering-skills",
+      "sourceType": "github",
+      "skillPath": "skills/repository-learning/SKILL.md",
+      "computedHash": "72eaee0c8384bf35eb9a32b83b7810ffd4b304b273f2f0caab9511575a66195a"
+    },
     "typesafe-ai": {
       "source": "typesafe-ai/skills",
       "sourceType": "github",
