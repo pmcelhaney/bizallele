@@ -97,3 +97,22 @@ rendering. The npm package is `bizallele`.
   targeting `main`. Include a concise description of the changes and validation
   results. If the user requests local-only work, keep commits local instead.
 - Do not merge pull requests or deploy unless the user explicitly requests it.
+
+## Pull request acceptance
+
+- Before creating or opening a PR, read
+  `.agents/skills/bizallele-pr-creation/SKILL.md` and follow its author workflow.
+- Every agent-created PR must include `## Manual acceptance tests` with 3–6
+  unchecked items describing observable behavior. Humans perform acceptance
+  and check the boxes; agents must never check them, even after exercising the
+  behavior or passing automated tests. Preserve existing human-checked boxes.
+- Report agent-run verification separately. A failing acceptance check while
+  human review is pending is expected; report it as awaiting human acceptance.
+- The workflow enforces acceptance on `codex/` and `copilot` branches and on
+  other PRs that include the acceptance heading. The `design` and
+  `skip-manual-acceptance-tests` labels are human-controlled exemptions;
+  agents must not apply them to bypass pending acceptance.
+- Acceptance and repository-learning sections are PR-author responsibilities.
+  Reviewing agents must not flag missing author sections as review findings.
+- See [the manual acceptance guide](docs/manual-acceptance-tests.md) for the
+  human review process and required-check setup.
