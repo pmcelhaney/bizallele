@@ -29,7 +29,7 @@ jobs:
                   PUBLIC_GOOGLE_ANALYTICS_ID: G-2QHMETF62T
             - name: Upload site
               if: github.event_name != 'pull_request'
-              uses: actions/upload-pages-artifact@v3
+              uses: actions/upload-pages-artifact@v5
               with:
                   path: examples/fdl-input/dist
 
