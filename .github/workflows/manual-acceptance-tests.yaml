@@ -1,0 +1,114 @@
+# This workflow guards against a subtle problem that grows as AI handles more of the implementation work:
+# it becomes increasingly easy to approve PRs without truly understanding what the code is supposed to do.
+# Requiring a manual acceptance test checklist creates a moment of deliberate reflection—"do I actually
+# understand the expected behavior?"—before a PR can be merged.
+#
+# It also establishes a shared vocabulary between the agent that wrote the code and the human who reviews it.
+# Instead of a vague "the tests pass", there is a concrete, observable list: "here is what you should be
+# able to see working." That specificity matters for catching regressions and misunderstandings early.
+#
+# How it works in this repository:
+#
+#   Validation IS enforced when:
+#     - The PR branch name starts with "codex/" or "copilot", OR
+#     - The PR body contains a "## Manual acceptance tests" section.
+#
+#   Validation is NOT enforced when:
+#     - The PR carries a "design" label (design-only PRs have no observable runtime behavior to test).
+#     - The PR carries a "skip-manual-acceptance-tests" label (explicit reviewer opt-out).
+#
+#   What the section must contain:
+#     - At least one checked item: - [x] some observable behavior
+#     - Zero unchecked items: every - [ ] box must be checked before merge.
+#
+# Note: the wording of the first two paragraphs was adapted from a comment
+# by Lilac Mohr on LinkedIn. If you're reading this, you will certainly be
+# interested in this article on her AI coding workflow.
+#
+# https://lilacmohr.com/articles/tdd-is-not-optional-with-ai.html
+name: Manual acceptance tests
+
+on:
+    pull_request:
+        types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+    merge_group:
+        types: [checks_requested]
+
+permissions:
+    contents: read
+
+jobs:
+    manual-acceptance-tests:
+        name: Validate manual acceptance tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Skip pull-request validation for a merge group
+              if: github.event_name == 'merge_group'
+              run: echo "Skipping manual acceptance test validation for a merge-group commit; the pull request was validated before queue admission."
+
+            - name: Decide whether to enforce
+              id: decide
+              if: github.event_name == 'pull_request'
+              env:
+                  PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+                  PR_BODY: ${{ github.event.pull_request.body }}
+                  PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+              run: |
+                  if python3 - <<'PY'
+                  import json, os, sys
+                  try:
+                      labels = json.loads(os.environ.get('PR_LABELS', '[]'))
+                      skip_labels = {'design', 'skip-manual-acceptance-tests'}
+                      sys.exit(0 if skip_labels.intersection(labels) else 1)
+                  except Exception as e:
+                      print(f'Error parsing PR labels: {e}', file=sys.stderr)
+                      sys.exit(1)
+                  PY
+                  then
+                    echo "enforce=false" >> "$GITHUB_OUTPUT"
+                  elif [[ "$PR_BRANCH" == codex/* || "$PR_BRANCH" == copilot* ]] || grep -iq "## manual acceptance tests" <<<"$PR_BODY"; then
+                    echo "enforce=true" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "enforce=false" >> "$GITHUB_OUTPUT"
+                  fi
+            - name: Skip (no enforcement needed)
+              if: steps.decide.outputs.enforce == 'false'
+              run: echo "Skipping manual acceptance test validation (design or skip-manual-acceptance-tests label, or neither a Codex/Copilot branch nor a manual acceptance section)"
+
+            - name: Validate PR body
+              if: github.event_name == 'pull_request' && steps.decide.outputs.enforce == 'true'
+              env:
+                  PR_BODY: ${{ github.event.pull_request.body }}
+              run: |
+                  python3 <<'PY'
+                  import os
+                  import re
+                  import sys
+
+                  body = os.environ.get("PR_BODY") or ""
+
+                  match = re.search(
+                      r"(?ims)^##\s*manual acceptance tests\s*\n(.*?)(?=^##\s|\Z)",
+                      body,
+                  )
+
+                  if not match:
+                      print('Missing required section: "## Manual acceptance tests"')
+                      sys.exit(1)
+
+                  section = match.group(1)
+
+                  checked = re.findall(r"(?mi)^\s*-\s\[x\]\s+.+$", section)
+                  unchecked = re.findall(r"(?m)^\s*-\s\[\s\]\s+.+$", section)
+
+                  if unchecked:
+                      print(f"Found {len(unchecked)} unchecked manual acceptance test box(es). All boxes must be checked before merge.")
+                      sys.exit(1)
+
+                  if len(checked) < 1:
+                      print("Expected at least one checked manual acceptance test box.")
+                      sys.exit(1)
+
+                  print(f"OK: found {len(checked)} checked manual acceptance test box(es) and no unchecked boxes.")
+                  PY
