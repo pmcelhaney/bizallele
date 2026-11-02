@@ -69,6 +69,7 @@
         }
     },
     "devDependencies": {
+        "@babel/core": "^8.1.0",
         "@babel/preset-env": "^8.0.0",
         "@open-wc/testing": "^5.0.0",
         "@types/jest": "^30.0.0",
