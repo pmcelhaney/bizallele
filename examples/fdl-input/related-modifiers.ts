@@ -20,6 +20,7 @@ const relationships: readonly (readonly string[])[] = [
     ['maxLength', 'minLength', 'validator'],
     ['maxLength', 'rowCount'],
     ['options', 'search', 'multipleValues'],
+    ['options', 'suggestions'],
     ['record', 'recordset', 'semanticType'],
     ['reducer', 'filter'],
     ['reducer', 'formatter'],

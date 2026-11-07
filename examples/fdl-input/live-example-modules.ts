@@ -1,3 +1,6 @@
+import './live-examples/suggestions/suggestions-example.js';
+import suggestionsModel from './live-examples/suggestions/suggestions-model.js?raw';
+import suggestionsView from './live-examples/suggestions/suggestions-view.js?raw';
 import './live-examples/cellClass/cellClass-example.js';
 import cellClassModel from './live-examples/cellClass/cellClass-model.js?raw';
 import cellClassView from './live-examples/cellClass/cellClass-view.js?raw';
@@ -228,6 +231,14 @@ export const liveExamples: {
         ui: multipleValuesView,
         modelFile: 'multipleValues-model.js',
         uiFile: 'multipleValues-view.js',
+        styles: '',
+    },
+    suggestions: {
+        directory: 'suggestions',
+        definition: suggestionsModel,
+        ui: suggestionsView,
+        modelFile: 'suggestions-model.js',
+        uiFile: 'suggestions-view.js',
         styles: '',
     },
     options: {

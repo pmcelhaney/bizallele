@@ -27,6 +27,8 @@ export const modifierDescriptions: Readonly<Record<string, string>> = {
         'Requires a minimum length for nonempty values during record validation.',
     multipleValues:
         'Allows a field to contain multiple values, with optional count limits.',
+    suggestions:
+        'Finds partial query-based choices without clearing or constraining the stored value.',
     options:
         'Supplies available choices, including asynchronous choices that depend on other fields.',
     parser: 'Converts input into the value stored in the record.',

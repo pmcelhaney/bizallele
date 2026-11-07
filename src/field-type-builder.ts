@@ -70,6 +70,24 @@ interface OptionsApi<T = unknown, F = Record<any>> {
     noCache?: boolean;
 }
 
+/** A query result, not a complete set of permitted field values. */
+export interface Suggestion<T = unknown> {
+    text: string;
+    value: T;
+}
+
+export type SuggestionsFetchFn<T, F = Record<any>> = (
+    query: string,
+    record: F,
+    signal?: AbortSignal
+) => T[] | Promise<T[]>;
+
+export interface SuggestionsApi<T = unknown, F = Record<any>, V = unknown> {
+    fetch: SuggestionsFetchFn<T, F>;
+    text?: string | ((data: T) => string);
+    value?: string | ((data: T) => V);
+}
+
 type BooleanPredicate = (value: any) => boolean;
 
 type ValidatorFunction<T> = (
@@ -155,6 +173,7 @@ export interface Properties<T = unknown> {
     rowCountConfigured: boolean;
     onValueChange: Array<Function>;
     options: OptionsApi | null;
+    suggestions: SuggestionsApi<any, any, any> | null;
     parseDynamicRange: boolean;
     parsers: Array<Function>;
     pattern?: RegExp;
@@ -221,6 +240,7 @@ export const defaultProperties: Properties = {
     rowCountConfigured: false,
     onValueChange: [],
     options: null,
+    suggestions: null,
     parseDynamicRange: false,
     parsers: [],
     placeholder: '',
@@ -264,6 +284,7 @@ export default class FieldTypeBuilder<T = unknown> {
             properties.options = { ...properties.options };
             delete (properties.options as OptionsApi & { cache?: unknown }).cache;
         }
+        if (properties.suggestions) properties.suggestions = { ...properties.suggestions };
         return new _FieldType<T>(properties);
     }
 
@@ -577,6 +598,24 @@ export default class FieldTypeBuilder<T = unknown> {
         const copy = this.copy();
         copy.properties.autocomplete = string;
         copy.properties.descriptions = [...copy.properties.descriptions, `autocomplete`];
+        return copy;
+    }
+
+    /** Configure independent partial lookups. Reapplying replaces the previous provider. */
+    suggestions<O = Suggestion<T>, F = Record<any>>(
+        suggestionsConfig: SuggestionsApi<O, F, T> | SuggestionsFetchFn<O, F>
+    ) {
+        const copy = this.copy();
+        const config =
+            typeof suggestionsConfig === 'function'
+                ? { fetch: suggestionsConfig }
+                : suggestionsConfig;
+        copy.properties.suggestions = {
+            fetch: config.fetch,
+            text: config.text ?? 'text',
+            value: config.value ?? 'value',
+        };
+        copy.properties.descriptions = [...copy.properties.descriptions, 'suggestions'];
         return copy;
     }
 

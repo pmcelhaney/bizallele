@@ -220,6 +220,30 @@ export default class FieldType {
         return !!this.properties.options;
     }
 
+    hasSuggestions() {
+        return !!this.properties.suggestions;
+    }
+
+    /**
+     * Fetch partial matches without changing field values or complete-option caches.
+     * Consumers own request cancellation and the handling of out-of-order results.
+     * @param {string} query
+     * @param {import('./record.js').default<any>} record
+     * @param {AbortSignal} [signal]
+     * @returns {Promise<import('./field-type-builder').Suggestion<T>[]>}
+     */
+    async suggestions(query, record, signal) {
+        const config = this.properties.suggestions;
+        if (!config) return [];
+        const results = await config.fetch(query, record, signal);
+        if (!Array.isArray(results)) return [];
+        return results.map(item => ({
+            ...(item !== null && typeof item === 'object' ? item : {}),
+            text: typeof config.text === 'function' ? config.text(item) : item?.[config.text],
+            value: typeof config.value === 'function' ? config.value(item) : item?.[config.value],
+        }));
+    }
+
     hasFilter() {
         return !!this.properties.filtering;
     }
