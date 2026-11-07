@@ -40,6 +40,8 @@ export function explainModifierCall(
                 ? `Checks that ${target} ${rule}; a failing value makes the field invalid.`
                 : `Checks ${target} against this validation rule; a failing value makes the field invalid.`;
         }
+        case 'suggestions':
+            return `Finds partial search results for ${target}; typing or receiving results does not change its stored value.`;
         case 'options': {
             const choices = [
                 ...argument.matchAll(/\btext\s*:\s*(['"])(.*?)\1/g),

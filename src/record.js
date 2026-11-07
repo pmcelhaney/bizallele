@@ -89,6 +89,19 @@ export default class Record extends EventTarget {
         return fieldType.options(this);
     }
 
+    /**
+     * Query partial suggestions without reconciling the current selection.
+     * @param {string} field
+     * @param {string} query
+     * @param {AbortSignal} [signal]
+     * @returns {Promise<import('./field-type-builder').Suggestion[]>}
+     */
+    async suggestionsForField(field, query, signal) {
+        const fieldType = resolveRecordFieldType(this, field);
+        if (this.field(field).disabled) return [];
+        return fieldType.suggestions(query, this, signal);
+    }
+
     /** Wait until option reconciliation and any resulting dependency changes settle. */
     async whenOptionsReady() {
         let pending;

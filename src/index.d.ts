@@ -21,3 +21,5 @@ export { field } from './primitives.js';
 export type { FieldDefinition, FieldDefinitions } from './types/field-definition.types';
 
 export * from './field-definitions.js';
+
+export type { Suggestion, SuggestionsApi, SuggestionsFetchFn } from './field-type-builder';
