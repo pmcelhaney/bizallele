@@ -6,6 +6,7 @@ import { property, state, customElement } from 'lit/decorators.js';
 import Record from '../record.js';
 import { ListeningElementMixin } from '../utilities/listening-element';
 import { Events } from '../types/events.types';
+import { SuggestionsController } from './suggestions-controller';
 
 const ListeningElement = ListeningElementMixin(RecordElement);
 let nextFormElementId = 0;
@@ -138,6 +139,8 @@ class FormElement extends ListeningElement {
     @state()
     private element?: any;
 
+    private suggestionsController?: SuggestionsController;
+
     private controlRecord?: Record<any>;
     private controlField?: string;
 
@@ -147,8 +150,17 @@ class FormElement extends ListeningElement {
         if (!this.record) return;
         if (!this.field) throw new Error('OmegaFormElement: field is required');
         const field = this.record.field(this.field);
-        const controlTag = field.hasOptions ? 'select' : field.hasRowCount ? 'textarea' : 'input';
-        this.optionsRequestVersion++;
+        const typeahead = field.hasSuggestions && !field.hasMultipleValues;
+        const controlTag = typeahead
+            ? 'input'
+            : field.hasOptions
+              ? 'select'
+              : field.hasRowCount
+                ? 'textarea'
+                : 'input';
+        this.suggestionsController?.dispose();
+        this.suggestionsController = undefined;
+        const controlVersion = ++this.optionsRequestVersion;
         this.optionsRequest = undefined;
         this.controlRecord = this.record;
         this.controlField = this.field;
@@ -160,6 +172,11 @@ class FormElement extends ListeningElement {
         this.syncSelectPrompt();
         this.addListenersToRecord();
         await this.destructureFieldType();
+        if (typeahead && this.isConnected && controlVersion === this.optionsRequestVersion) {
+            this.suggestionsController = new SuggestionsController(this.element, field, () =>
+                this.requestUpdate()
+            );
+        }
     }
 
     private optionsRequest?: Promise<unknown>;
@@ -201,12 +218,15 @@ class FormElement extends ListeningElement {
     addListenersToElement() {
         if (this.nativeTextControl) {
             this.listenTo(this.element, 'blur', () => {
-                if (!['checkbox', 'radio', 'file'].includes(this.element.type)) {
+                if (
+                    !this.suggestionsController &&
+                    !['checkbox', 'radio', 'file'].includes(this.element.type)
+                ) {
                     this.element.value = this.record?.field(this.field).focusedInputValue;
                 }
             });
             this.listenTo(this.element, 'beforeinput', (event: Event) => {
-                if (!(event instanceof InputEvent)) return;
+                if (this.suggestionsController || !(event instanceof InputEvent)) return;
                 if (
                     !this.composing &&
                     !event.isComposing &&
@@ -222,12 +242,15 @@ class FormElement extends ListeningElement {
             });
             this.listenTo(this.element, 'compositionend', () => {
                 this.composing = false;
-                this.element.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+                if (!this.suggestionsController)
+                    this.element.dispatchEvent(
+                        new Event('input', { bubbles: true, composed: true })
+                    );
             });
         }
         Events.forEach(e => {
             this.listenTo(this.element, e, async (event: any) => {
-                if (this.composing || event.isComposing) return;
+                if (this.suggestionsController || this.composing || event.isComposing) return;
                 this.filterNativeInput();
                 let value;
                 if (event.detail) {
@@ -268,11 +291,15 @@ class FormElement extends ListeningElement {
         this.connectValidation();
         if (this.element) {
             this.addListenersToElement();
-            void this.destructureFieldType();
+            this.controlRecord = undefined;
+            void this.firstUpdated();
         }
     }
 
     disconnectedCallback() {
+        this.optionsRequestVersion++;
+        this.suggestionsController?.dispose();
+        this.suggestionsController = undefined;
         document.removeEventListener('click', this.closeMultipleMenu);
         this.removeEventListener('focusout', this.fieldFocusOut);
         this.validationRecord?.removeEventListener('blur', this.recordBlur);
@@ -385,7 +412,9 @@ class FormElement extends ListeningElement {
          */
         if (this.element instanceof HTMLInputElement) {
             const type = boundField?.type;
-            if (typeof type === 'string') this.element.type = type;
+            if (boundField?.hasSuggestions && !boundField.hasMultipleValues)
+                this.element.type = 'text';
+            else if (typeof type === 'string') this.element.type = type;
         }
         // Native selects use option identities, not formatted labels. Keep all
         // selected identities intact between native input and change events.
@@ -456,7 +485,11 @@ class FormElement extends ListeningElement {
         this.element.hideSelectAll = boundField?.hideSelectAll;
         this.element.maxValueCount = boundField?.maxValueCount();
 
-        if (boundField?.hasOptions && boundField.disabled) {
+        this.suggestionsController?.sync();
+
+        if (boundField?.hasSuggestions && !boundField.hasMultipleValues) {
+            // Complete options, if present, remain owned by Record reconciliation.
+        } else if (boundField?.hasOptions && boundField.disabled) {
             // Invalidate pending UI work without fetching or erasing its options.
             this.optionsRequestVersion++;
             this.optionsRequest = undefined;
@@ -550,11 +583,14 @@ class FormElement extends ListeningElement {
             if (this.record && this.field) void this.firstUpdated();
             else {
                 this.optionsRequestVersion++;
+                this.suggestionsController?.dispose();
+                this.suggestionsController = undefined;
                 this.element = undefined;
             }
         }
         if (changedProperties.has('selectPrompt')) this.syncSelectPrompt();
         this.updateValidationAccessibility();
+        this.suggestionsController?.afterRender();
     }
 
     protected get validationErrorsVisible(): boolean {
@@ -638,7 +674,7 @@ class FormElement extends ListeningElement {
         this.element.hidden = false;
         return html`<div class="control">
             <div class="control-input" ?data-loading=${this.element.loading}>
-                ${this.element}
+                ${this.element} ${this.suggestionsController?.render() ?? nothing}
                 ${this.element.loading ? html`<span class="options-spinner" aria-hidden="true"></span>` : nothing}
             </div>
             ${this.element.loading ? html`<p class="options-loading" role="status">Loading choices…</p>` : nothing}
@@ -676,6 +712,39 @@ class FormElement extends ListeningElement {
             }
             .control-input {
                 position: relative;
+            }
+            .suggestions {
+                position: absolute;
+                z-index: 10;
+                inset: 100% 0 auto;
+                background: white;
+                border: 1px solid #94a3b8;
+                border-radius: 6px;
+                box-shadow: 0 8px 20px #0f172a24;
+            }
+            .suggestions[hidden] {
+                display: none;
+            }
+            .suggestions ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                max-height: 16rem;
+                overflow: auto;
+            }
+            .suggestions li {
+                padding: 10px 14px;
+                cursor: pointer;
+            }
+            .suggestions li[aria-selected='true'] {
+                outline: 2px solid currentColor;
+                outline-offset: -2px;
+                background: #e2e8f0;
+            }
+            .suggestions p {
+                padding: 8px 14px;
+                margin: 0;
+                font-size: 0.875rem;
             }
             .control-input[data-loading] select {
                 padding-right: 3.5rem;

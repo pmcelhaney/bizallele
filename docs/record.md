@@ -153,3 +153,15 @@ Use `await record.field(fieldName).isValidAsync()` for one field or
 `await record.isValidAsync()` for the whole record. The `Field` facade and the
 built-in form adapter currently require synchronous validators; see the
 validation guidance in [Binding components to Bizallele](./field-type.md#validation-and-error-display).
+
+## Partial search results
+
+Use `record.field(name).suggestions(query, signal?)` for typeahead providers
+declared with `suggestions()`. This returns normalized `{ text, value }` results
+without changing the record. A missing selection in a partial result is not
+evidence that the value is invalid. Suggestions do not run options
+reconciliation or populate the options cache. If the field also declares
+`options()`, that complete list remains authoritative.
+
+The component keeps search text separate from the stored value and commits only
+a chosen result. See [Suggestions and typeahead](./field-type.md#suggestions-and-typeahead).

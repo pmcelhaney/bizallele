@@ -1,8 +1,8 @@
 # Form elements
 
 > Compatibility note: `rowCount()` remains a deprecated textarea-sizing API.
-> The built-in adapter chooses a select when a field provides options, a textarea
-> when `rowCount()` is configured, and an input otherwise. Keep
+> The built-in adapter chooses a combobox for scalar suggestions, otherwise a
+> select for options, a textarea for `rowCount()`, and an input otherwise. Keep
 > control selection and textarea sizing in renderer configuration for new
 > integrations; keep validation and dependencies in the field model.
 
@@ -245,6 +245,26 @@ html`<fdl-field field="contactMethod" .record=${record}></fdl-field>`;
 Do not create separate `<fdl-input>`, `<fdl-select>`, or `<fdl-textarea>` APIs.
 Keep `<fdl-field>` stable at the call site; its adapter chooses the native
 control from the field metadata.
+
+## Suggestion comboboxes in Lit
+
+The packaged Lit `<fdl-field>` renders a scalar field with `suggestions()` as an
+accessible combobox with a listbox of query results. Use Arrow Down/Arrow Up to
+navigate and Enter to select, or click a result. Escape or blur restores the
+committed display. Loading, no-results, and request failures are surfaced by the
+component; none of those states clears the stored value. Erasing the query is
+not a model-clear operation. Selecting a result assigns its raw value, rather
+than parsing the query text or a DOM string.
+
+The component passes an abort signal to the provider and ignores stale results.
+The provider should pass the signal to its network request when supported.
+Suggestions are partial discovery results, not a complete allowed-values list.
+If `options()` is present too, the scalar component still uses the combobox, but
+the record retains authoritative options reconciliation. Multiple-value suggestion editing is not
+supported. The older native form adapter does not implement this combobox.
+
+See [Suggestions and typeahead](./field-type.md#suggestions-and-typeahead) for the
+API and the working local asynchronous example.
 
 ## Labels, IDs, and read-only values
 

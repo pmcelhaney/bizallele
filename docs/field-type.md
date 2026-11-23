@@ -152,29 +152,30 @@ settings automatically.
 
 ### Methods
 
-| Method                                   | Purpose                                                               |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| `isValid()` / `isValid(value)`           | Validate the current or supplied model value synchronously.           |
-| `isValidAsync()` / `isValidAsync(value)` | Validate the current or supplied model value asynchronously.          |
-| `errors()` / `errorsAsync()`             | Read the current or supplied validation errors.                       |
-| `readableErrors()`                       | Read field errors prepared for display.                               |
-| `isValidValue(input)`                    | Parse and synchronously validate a proposed input without storing it. |
-| `isValidValueAsync(input)`               | Async version of proposed-value validation.                           |
-| `parse(input, context)`                  | Parse input into a model value without storing it.                    |
-| `format(value, context)`                 | Format a model value for a renderer context.                          |
-| `print(value)`                           | Format a value and apply its print template.                          |
-| `options()`                              | Load this field's choices through the record's disabled-state gate.   |
-| `refreshOptions()`                       | Request record-wide option loading and reconciliation.                |
-| `whenOptionsReady()`                     | Wait for record-wide option loading and dependent reconciliation.     |
-| `onChange(fn)`                           | Listen for a change to this field's value or validity.                |
-| `allowInputChar(char)`                   | Apply the field's input-character rule.                               |
-| `isEmpty(value)`                         | Resolve whether the current or supplied value is empty.               |
-| `defaultValue(value)`                    | Resolve a default through the bound field definition.                 |
-| `match(searchText, value)`               | Apply the field's filter behavior to the current or supplied value.   |
-| `cellClasses(value)`                     | Resolve classes for the current or supplied value.                    |
-| `textAlign(value, context)`              | Resolve alignment for the current or supplied value.                  |
-| `field(nameOrIndex)`                     | Address a nested field or part.                                       |
-| `minValueCount()` / `maxValueCount()`    | Read multiple-value count metadata.                                   |
+| Method                                          | Purpose                                                                           |
+| ----------------------------------------------- | --------------------------------------------------------------------------------- |
+| `isValid()` / `isValid(value)`                  | Validate the current or supplied model value synchronously.                       |
+| `isValidAsync()` / `isValidAsync(value)`        | Validate the current or supplied model value asynchronously.                      |
+| `errors()` / `errorsAsync()`                    | Read the current or supplied validation errors.                                   |
+| `readableErrors()`                              | Read field errors prepared for display.                                           |
+| `isValidValue(input)`                           | Parse and synchronously validate a proposed input without storing it.             |
+| `isValidValueAsync(input)`                      | Async version of proposed-value validation.                                       |
+| `parse(input, context)`                         | Parse input into a model value without storing it.                                |
+| `format(value, context)`                        | Format a model value for a renderer context.                                      |
+| `print(value)`                                  | Format a value and apply its print template.                                      |
+| `hasSuggestions`, `suggestions(query, signal?)` | Discover and load partial query-driven choices without changing the stored value. |
+| `options()`                                     | Load this field's choices through the record's disabled-state gate.               |
+| `refreshOptions()`                              | Request record-wide option loading and reconciliation.                            |
+| `whenOptionsReady()`                            | Wait for record-wide option loading and dependent reconciliation.                 |
+| `onChange(fn)`                                  | Listen for a change to this field's value or validity.                            |
+| `allowInputChar(char)`                          | Apply the field's input-character rule.                                           |
+| `isEmpty(value)`                                | Resolve whether the current or supplied value is empty.                           |
+| `defaultValue(value)`                           | Resolve a default through the bound field definition.                             |
+| `match(searchText, value)`                      | Apply the field's filter behavior to the current or supplied value.               |
+| `cellClasses(value)`                            | Resolve classes for the current or supplied value.                                |
+| `textAlign(value, context)`                     | Resolve alignment for the current or supplied value.                              |
+| `field(nameOrIndex)`                            | Address a nested field or part.                                                   |
+| `minValueCount()` / `maxValueCount()`           | Read multiple-value count metadata.                                               |
 
 The facade reports a field change when the record changes its raw value or
 validity. It does not replace the record's broader `change` event, which remains
@@ -386,6 +387,62 @@ second dependency graph.
 validate the count. If the model requires a particular number of selections,
 the field definition must provide a validator and the component should display
 that model error.
+
+## Suggestions and typeahead
+
+Use `suggestions()` for query-driven, possibly incomplete results. Unlike
+`options()`, suggestions do not declare all allowed values and never clear a
+stored value merely because it is missing from a response.
+
+```js
+import { string, Record } from 'bizallele';
+
+const cities = ['Amsterdam', 'Athens', 'Berlin', 'Boston', 'Lisbon', 'London'];
+const destination = string.suggestions({
+    async fetch(query, record, signal) {
+        // A real provider can pass signal to fetch(url, { signal }).
+        return cities.filter(city => city.toLowerCase().includes(query.toLowerCase()));
+    },
+    text: city => city,
+    value: city => city,
+});
+const trip = new Record({ destination }, { destination: 'Paris' });
+const destinationField = trip.field('destination');
+const matches = await destinationField.suggestions('lo');
+// matches: [{ text: 'London', value: 'London' }]
+// trip.getField('destination') is still 'Paris'.
+```
+
+The builder accepts `{ fetch, text?, value? }` or the fetch function directly.
+The provider receives `(query, record, signal?)` and returns an array or a promise
+of an array. `text` and `value` map provider items to display labels and stored
+values, using property names or functions. Without mappings, items are expected to provide `text` and `value` properties.
+For plain strings, map both properties with `city => city` as above.
+For example, use `text: 'name', value: 'id'` for directory entries. The value
+mapping can return an object when the application needs raw object identity.
+
+`Field.hasSuggestions` reports whether a provider exists.
+`Field.suggestions(query, signal?)` returns a promise of normalized
+`{ text, value }` results. Disabled fields return an empty list without calling
+the provider. Loading does not assign a value, validate membership,
+cache queries, or participate in options reconciliation. A later `suggestions()`
+call on a builder replaces the earlier provider without changing the base
+builder. Applications own network requests and caching; components own query
+state, cancellation, stale-response handling, and accessible interaction.
+
+If both `options()` and `suggestions()` are configured, the complete options list
+still controls selection reconciliation. Suggestions cannot widen that list.
+The built-in Lit component renders scalar fields with suggestions as a combobox,
+even when options are also declared. Typing,
+erasing the query, loading results, and receiving no matches leave the committed
+value intact. Selecting a result commits its raw value. Escape or blur abandons
+the query and restores the committed display. Multiple-value suggestion editing
+is not implemented by this component. Existing validators still apply to the
+committed value.
+
+Try the working [suggestions example](http://localhost:5173/#suggestions)
+in the documentation site. The example uses an asynchronous local directory so
+it works without a server or credentials.
 
 ## Validation and error display
 

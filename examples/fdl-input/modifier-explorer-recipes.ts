@@ -27,6 +27,19 @@ type Detail = [
 // The catalog owns the modifier inventory, definitions, and runnable examples.
 // This view supplies the additional explanation needed for one modifier per page.
 const details: { [name: string]: Detail } = {
+    suggestions: [
+        'Input',
+        '(configuration)',
+        'Search partial results without changing the committed value.',
+        'Search for “lo”, then “zzzz”. Paris remains committed until you choose a result.',
+        [
+            'The provider receives the query, current record, and optional abort signal.',
+            'Typing only changes the search query. Partial or empty results never reconcile the stored value.',
+            'Choose London to commit it; Escape or blur restores the committed display without selecting.',
+        ],
+        'Use a fetch function or { fetch, text, value } configuration. Results may be synchronous or asynchronous. Repeated declarations replace the provider; there is no built-in cache. Suggestions are not an allowed-values constraint. If options() is also declared, its complete list remains authoritative for model reconciliation; the scalar Lit component still uses a combobox. This example supports scalar selection, not multiple-value suggestions.',
+        'Typeahead for large directories and remote search where each response is only a partial list.',
+    ],
     cellClass: [
         'Tables',
         '(classes)',

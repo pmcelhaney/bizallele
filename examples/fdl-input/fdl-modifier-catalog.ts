@@ -21,6 +21,7 @@ type DemoName =
     | 'minLength'
     | 'multipleValues'
     | 'options'
+    | 'suggestions'
     | 'placeholder'
     | 'record'
     | 'semanticType'
@@ -70,6 +71,12 @@ const placeholder = (
 });
 
 export const modifierEntries: CatalogEntry[] = [
+    live(
+        'suggestions',
+        'Finds partial, query-driven choices without constraining the stored value.',
+        'suggestions',
+        `.suggestions({ fetch: findCities, text: city => city, value: city => city })`
+    ),
     live(
         'cellClass',
         'Adds cell classes directly or computes them from the value and record.',

@@ -20,6 +20,8 @@ export const modifierSignatures: { [name: string]: string } = {
     minColumnWidth: 'minColumnWidth(width: ColumnSetting<number>)',
     minLength: 'minLength(length: RecordSetting<number>)',
     multipleValues: 'multipleValues(min?: number, max?: number)',
+    suggestions:
+        'suggestions<O = Suggestion<T>, F = Record<any>>(suggestionsConfig: SuggestionsApi<O, F, T> | SuggestionsFetchFn<O, F>)',
     options:
         'options<O = T, F = Record<any>>(optionsConfig: OptionsApi<O, F> | ((record: Record<any>) => O[] | Promise<O[]>) | Promise<O[]> | Array<O>)',
     parser: 'parser(fn: (value: any, record: Record<any>, context: string) => T)',

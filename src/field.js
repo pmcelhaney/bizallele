@@ -143,6 +143,10 @@ export default class Field extends EventTarget {
         return this.#fieldType().hasOptions();
     }
 
+    get hasSuggestions() {
+        return this.#fieldType().hasSuggestions();
+    }
+
     get hideSelectAll() {
         return this.#fieldType().properties.options?.hideSelectAll;
     }
@@ -287,6 +291,15 @@ export default class Field extends EventTarget {
 
     options() {
         return this.record.optionsForField(this.fieldName);
+    }
+
+    /**
+     * @param {string} query
+     * @param {AbortSignal} [signal]
+     * @returns {Promise<import('./field-type-builder').Suggestion[]>}
+     */
+    suggestions(query, signal) {
+        return this.record.suggestionsForField(this.fieldName, query, signal);
     }
 
     onValueChange() {
