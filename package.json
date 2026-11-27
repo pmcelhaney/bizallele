@@ -81,7 +81,7 @@
         "prettier": "^3.9.10",
         "regenerator-runtime": "^0.14.1",
         "ts-jest": "^29.4.15",
-        "typescript": "^6.0.3",
+        "typescript": "^7.0.0",
         "vite": "^8.3.4",
         "zod": "^4.6.7"
     },
